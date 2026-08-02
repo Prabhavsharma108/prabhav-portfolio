@@ -131,7 +131,7 @@ const AwardButton = ({ onClick, texture, paintedTexture, width, height, position
                 color="#1a1a1a"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/SpaceGrotesk.ttf"
+                font="/fonts/CabinSketch-Bold.ttf"
             >
                 VIEW
             </Text>
@@ -349,7 +349,7 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 color="#1a1a1a"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/SpaceGrotesk.ttf"
+                font="/fonts/RubikScribble-Regular.ttf"
             >
                 SUYASH AGRAHARI
             </Text>
@@ -362,7 +362,7 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 color="#4a4a4a"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/JetBrainsMono.ttf"
+                font="/fonts/CabinSketch-Regular.ttf"
             >
                 (SOFTWARE ENGINEER AT HIREQUOTIENT)
             </Text>
@@ -386,7 +386,7 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 color="#555555"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/JetBrainsMono.ttf"
+                font="/fonts/CabinSketch-Regular.ttf"
                 fontStyle="italic"
             >
                 "Building AI-powered products
@@ -400,7 +400,7 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 color="#555555"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/JetBrainsMono.ttf"
+                font="/fonts/CabinSketch-Regular.ttf"
                 fontStyle="italic"
             >
                 across frontend, backend & AWS"
@@ -410,91 +410,87 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
 };
 
 /**
- * MOCK DATA FOR AWARDS
+ * WORK EXPERIENCE DATA
+ *
+ * The three cards floating in the About room. `items` carries screenshots and
+ * `detailsFile` a long-form write-up; both are optional and left empty here
+ * until there are assets worth showing.
  */
 const WORK_EXPERIENCE_DATA = {
-    hirequotient: {
-        id: 'work-hirequotient',
+    rankshoot: {
+        id: 'work-rankshoot',
         layout: 'work_experience',
-        title: 'HireQuotient',
-        subtitle: 'SOFTWARE ENGINEER',
-        period: 'May 2024 – Present',
-        location: 'Bengaluru, India',
-        description: 'Building AI agents, autonomous workflows, recruiting copilots & scalable systems used by thousands of users.',
-        detailsFile: '/awards/HIREQUOTIENT.md',
-        items: [
-            { label: 'AI Agent Architecture', image: '/awards/hirequotient1.png', date: '2024-2026' },
-            { label: 'Recruiting Platform', image: '/awards/hirequotient2.png', date: '2024-2026' }
-        ],
+        title: 'RankShoot',
+        subtitle: 'FOUNDER & PRODUCT ENGINEER',
+        period: 'Mar 2026 – Present',
+        location: 'Jaipur, India',
+        description: 'An AI SEO automation platform I founded and built end to end — keyword research, content generation and publishing as one pipeline.',
+        detailsFile: null,
+        items: [],
         platformConfig: {
-            label: 'CURRENT',
+            label: 'FOUNDER',
+            color: '#FF6B6B',
+            icon: '🚀'
+        },
+        highlights: [
+            'Next.js, React, Node.js, PostgreSQL & LLM APIs',
+            'Agent pipelines for blogs, metadata, FAQs & internal links',
+            'Cut manual content production effort by 80%+',
+            'Auth, analytics, billing & cloud infra — all mine',
+            'Serving multiple beta customers'
+        ]
+    },
+    cadencepro: {
+        id: 'work-cadencepro',
+        layout: 'work_experience',
+        title: 'Cadence Pro',
+        subtitle: 'SOFTWARE ENGINEER',
+        period: 'Mar 2025 – May 2026',
+        location: 'Jaipur, India',
+        description: 'Rebuilt the flagship AI chatbot and took it to where engineers actually work — inside Slack and GitHub.',
+        detailsFile: null,
+        items: [],
+        platformConfig: {
+            label: 'ENGINEER',
             color: '#4285F4',
             icon: '💼'
         },
         highlights: [
-            'Autonomous AI agents with LangGraph & LangChain',
-            'AI copilot reducing manual work by 70%',
-            'Multi-channel outreach (93% faster)',
-            '70+ AI tools integrated',
-            'YouTube transcoder: 40K → 4.4M users'
+            'Chatbot rebuilt in React, TypeScript & Tailwind',
+            'Reusable component architecture cut UI effort',
+            'Slack & GitHub integrations over OAuth + webhooks',
+            'Trie-backed real-time mention search',
+            'Multi-agent planning on LangGraph & LangChain'
         ]
     },
-    subhsandesh: {
-        id: 'work-subhsandesh',
+    hirequotient: {
+        id: 'work-hirequotient',
         layout: 'work_experience',
-        title: 'SubhSandesh',
-        subtitle: 'SOLO FOUNDER & TECH ENGINEER',
-        period: 'Founded & Scaled',
-        location: 'India',
-        description: 'Built and scaled SubhSandesh — an emotion-driven digital platform serving users across India.',
-        detailsFile: '/awards/SUBHSANDESH.md',
-        items: [
-            { label: 'Celebration Templates', image: '/awards/subhsandesh1.png', date: '2023-2026' },
-            { label: 'User Experience', image: '/awards/subhsandesh2.png', date: '2023-2026' }
-        ],
+        title: 'HireQuotient',
+        subtitle: 'FRONTEND / MERN DEVELOPER',
+        period: 'Jun 2024 – Feb 2025',
+        location: 'Bengaluru, India (Remote)',
+        description: 'Built and maintained a large catalogue of AI-powered web apps, where the real problem was consistency and speed at volume.',
+        detailsFile: null,
+        items: [],
         platformConfig: {
-            label: 'FOUNDER',
-            color: '#FF6B6B',
-            icon: '🎉'
-        },
-        highlights: [
-            'Solo founder & full-stack engineer',
-            '500+ users across 28+ states',
-            '99.9% uptime',
-            'AI-powered celebration messages',
-            'Multi-language support'
-        ]
-    },
-    drawflow: {
-        id: 'work-drawflow',
-        layout: 'work_experience',
-        title: 'DrawFlow',
-        subtitle: 'FOUNDER & SOLO ARCHITECT',
-        period: 'Founded & Built',
-        location: 'Remote',
-        description: 'Creating a collaborative diagramming platform with real-time editing, built as a free alternative.',
-        detailsFile: '/awards/DRAWFLOW.md',
-        items: [
-            { label: 'Collaborative Canvas', image: '/awards/drawflow.png', date: '2024-2026' }
-        ],
-        platformConfig: {
-            label: 'FOUNDER',
+            label: 'INTERNSHIP',
             color: '#4ECDC4',
-            icon: '🎨'
+            icon: '⚡'
         },
         highlights: [
-            'Real-time collaboration via WebSockets',
-            'Free alternative to Excalidraw',
-            'Infinite canvas & node editor',
-            'Architecture diagrams & flowcharts',
-            'Open-source philosophy'
+            '60+ AI-powered web applications shipped',
+            'React, Next.js, Node.js, MongoDB & OpenAI APIs',
+            'AI resume builder & SEO content tooling',
+            'Organic traffic grew 40K → 800K monthly visits',
+            'Strapi CMS cut feature dev time ~35%'
         ]
     }
 };
 
 /**
  * WORK EXPERIENCE Milestone - Floating Cards
- * HireQuotient (center), SubhSandesh, DrawFlow
+ * HireQuotient (center), RankShoot, Cadence Pro
  */
 const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
     const { camera, viewport } = useThree();
@@ -640,7 +636,7 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                 color="#1a1a1a"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/SpaceGrotesk.ttf"
+                font="/fonts/RubikScribble-Regular.ttf"
             >
                 WORK EXPERIENCE
             </Text>
@@ -673,7 +669,7 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                 <AwardButton
                     onClick={(e) => {
                         e.stopPropagation();
-                        openOverlay(WORK_EXPERIENCE_DATA.subhsandesh);
+                        openOverlay(WORK_EXPERIENCE_DATA.rankshoot);
                     }}
                     texture={buttonTexture}
                     paintedTexture={buttonPaintedTexture}
@@ -689,9 +685,9 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                     color="#FF6B6B"
                     anchorX="center"
                     anchorY="middle"
-                    font="/fonts/SpaceGrotesk.ttf"
+                    font="/fonts/CabinSketch-Bold.ttf"
                 >
-                    SubhSandesh
+                    RankShoot
                 </Text>
                 {/* ROLE */}
                 <Text
@@ -700,11 +696,11 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                     color="#1a1a1a"
                     anchorX="center"
                     anchorY="middle"
-                    font="/fonts/JetBrainsMono.ttf"
+                    font="/fonts/CabinSketch-Regular.ttf"
                     maxWidth={2.2}
                     textAlign="center"
                 >
-                    FOUNDER & ENGINEER
+                    FOUNDER & PRODUCT ENGINEER
                 </Text>
             </group>
 
@@ -736,7 +732,7 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                 <AwardButton
                     onClick={(e) => {
                         e.stopPropagation();
-                        openOverlay(WORK_EXPERIENCE_DATA.drawflow);
+                        openOverlay(WORK_EXPERIENCE_DATA.cadencepro);
                     }}
                     texture={buttonTexture}
                     paintedTexture={buttonPaintedTexture}
@@ -752,9 +748,9 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                     color="#4ECDC4"
                     anchorX="center"
                     anchorY="middle"
-                    font="/fonts/SpaceGrotesk.ttf"
+                    font="/fonts/CabinSketch-Bold.ttf"
                 >
-                    DrawFlow
+                    Cadence Pro
                 </Text>
                 {/* ROLE */}
                 <Text
@@ -763,11 +759,11 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                     color="#1a1a1a"
                     anchorX="center"
                     anchorY="middle"
-                    font="/fonts/JetBrainsMono.ttf"
+                    font="/fonts/CabinSketch-Regular.ttf"
                     maxWidth={2.2}
                     textAlign="center"
                 >
-                    FOUNDER & ARCHITECT
+                    SOFTWARE ENGINEER
                 </Text>
             </group>
 
@@ -814,7 +810,7 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                     color="#4285F4"
                     anchorX="center"
                     anchorY="middle"
-                    font="/fonts/SpaceGrotesk.ttf"
+                    font="/fonts/CabinSketch-Bold.ttf"
                 >
                     HireQuotient
                 </Text>
@@ -825,11 +821,11 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                     color="#1a1a1a"
                     anchorX="center"
                     anchorY="middle"
-                    font="/fonts/JetBrainsMono.ttf"
+                    font="/fonts/CabinSketch-Regular.ttf"
                     maxWidth={2.2}
                     textAlign="center"
                 >
-                    SOFTWARE ENGINEER
+                    FRONTEND / MERN DEV
                 </Text>
             </group>
         </group>
@@ -925,7 +921,7 @@ const JourneyMilestone = ({ z, scrollProgressRef }) => {
                 color="#1a1a1a"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/SpaceGrotesk.ttf"
+                font="/fonts/RubikScribble-Regular.ttf"
             >
                 JOURNEY
             </Text>
@@ -937,7 +933,7 @@ const JourneyMilestone = ({ z, scrollProgressRef }) => {
                 color="#555555"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/JetBrainsMono.ttf"
+                font="/fonts/CabinSketch-Regular.ttf"
             >
                 My path so far...
             </Text>
@@ -959,7 +955,7 @@ const JourneyMilestone = ({ z, scrollProgressRef }) => {
                     color="#1a1a1a"
                     anchorX="center"
                     anchorY="middle"
-                    font="/fonts/SpaceGrotesk.ttf"
+                    font="/fonts/CabinSketch-Bold.ttf"
                 >
                     2020-2024
                 </Text>
@@ -982,7 +978,7 @@ const JourneyMilestone = ({ z, scrollProgressRef }) => {
                     color="#1a1a1a"
                     anchorX="center"
                     anchorY="middle"
-                    font="/fonts/SpaceGrotesk.ttf"
+                    font="/fonts/CabinSketch-Bold.ttf"
                 >
                     2022-NOW
                 </Text>
@@ -1332,7 +1328,7 @@ const SkillBalloon = ({ config, revealFactorRef, spreadFactorRef, timeRef }) => 
                         color="#1a1a1a"
                         anchorX="center"
                         anchorY="middle"
-                        font="/fonts/SpaceGrotesk.ttf"
+                        font="/fonts/RubikScribble-Regular.ttf"
                         fillOpacity={0}
                         outlineWidth={0.02}
                         outlineColor="#fff"
@@ -1421,7 +1417,7 @@ const SkillsMilestone = ({ z, scrollProgressRef }) => {
                 color="#1a1a1a"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/SpaceGrotesk.ttf"
+                font="/fonts/RubikScribble-Regular.ttf"
             >
                 SKILLS
             </Text>
@@ -1433,7 +1429,7 @@ const SkillsMilestone = ({ z, scrollProgressRef }) => {
                 color="#555555"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/JetBrainsMono.ttf"
+                font="/fonts/CabinSketch-Regular.ttf"
             >
                 Technologies I love working with
             </Text>

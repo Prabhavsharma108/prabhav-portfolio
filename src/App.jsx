@@ -78,7 +78,7 @@ if (isLowEnd) {
   filteredLoader.forEach(path => useLoader.preload(TextureLoader, path));
 }
 
-const FONT_URL = '/fonts/JetBrainsMono.ttf';
+const FONT_URL = 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff';
 
 // Helper component to handle global audio enable on interaction
 const GlobalAudioEnabler = () => {
@@ -147,10 +147,8 @@ function AppContent() {
               dpr={settings.dpr}
               shadows={settings.shadows}
             >
-              {/* The sheet fades into the drafting table at depth, which is
-                  what hides the seam where corridor segments are recycled. */}
-              <color attach="background" args={['#08131f']} />
-              <fog attach="fog" args={['#08131f', 15, 50]} />
+              <color attach="background" args={['#fafafa']} />
+              <fog attach="fog" args={['#fafafa', 15, 50]} />
 
               {/* Scale performance down if fps drops */}
               <PerformanceMonitor

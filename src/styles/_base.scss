@@ -1,43 +1,11 @@
 // =============================================================================
-// BASE STYLES — Prabhav Sharma / Blueprint
+// BASE STYLES - Prabhav Sharma Portfolio (3D Corridor Experience)
 // =============================================================================
 
 @use 'variables' as *;
 @use 'mixins' as *;
 
-// -----------------------------------------------------------------------------
-// FONTS
-// Self-hosted, latin subset, variable weight — one file per family serves every
-// weight we use. `swap` so text paints immediately on the drafting sheet rather
-// than blocking the first frame of the 3D scene.
-// -----------------------------------------------------------------------------
-@font-face {
-    font-family: 'JetBrains Mono';
-    src: url('/fonts/JetBrainsMono.woff2') format('woff2-variations');
-    font-weight: 100 800;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Space Grotesk';
-    src: url('/fonts/SpaceGrotesk.woff2') format('woff2-variations');
-    font-weight: 300 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter.woff2') format('woff2-variations');
-    font-weight: 100 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-// -----------------------------------------------------------------------------
-// RESET
-// -----------------------------------------------------------------------------
+// CSS Reset
 *,
 *::before,
 *::after {
@@ -55,23 +23,15 @@ html {
 }
 
 body {
-    font-family: $font-body;
-    background-color: $bp-ink;
-    color: $bp-text;
-    overflow: hidden; // the 3D scene owns scrolling
+    font-family: $font-primary;
+    background-color: #fafafa;
+    color: $color-black;
+    overflow: hidden; // No scroll - 3D handles it
     @include smooth-text;
     @include hide-scrollbar;
 }
 
-// Text selection reads as a highlighter on the sheet.
-::selection {
-    background: $bp-cyan-soft;
-    color: $bp-text;
-}
-
-// -----------------------------------------------------------------------------
-// LAYOUT SHELL
-// -----------------------------------------------------------------------------
+// App container
 .app {
     width: 100%;
     height: 100vh;
@@ -80,23 +40,22 @@ body {
     overflow: hidden;
 }
 
+// Canvas wrapper
 .canvas-wrapper {
     position: absolute;
     inset: 0;
-    z-index: $z-canvas;
+    z-index: 1;
 }
 
+// UI Overlay
 .ui-overlay {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: $z-ui;
+    z-index: 50;
 }
 
-// -----------------------------------------------------------------------------
-// SCROLL HINT
-// Styled as a dimension line: a tracked label above a descending leader.
-// -----------------------------------------------------------------------------
+// Scroll hint
 .scroll-hint {
     position: absolute;
     bottom: 2rem;
@@ -105,39 +64,36 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
-    animation: bp-fade-in 1s $ease-draft 0.5s both;
+    gap: 0.5rem;
+    animation: fadeIn 1s ease 0.5s both;
 
     &__text {
-        @include bp-label(0.66rem, $bp-text-mid);
+        font-family: $font-handwritten;
+        font-size: 1rem;
+        color: #666;
     }
 
-    // The leader line itself — a 1px rule that pulses downward, standing in
-    // for the old bouncing arrow.
     &__arrow {
-        width: 1px;
-        height: 34px;
-        background: linear-gradient(to bottom, $bp-cyan, transparent);
-        animation: bp-leader 2.2s $ease-draft infinite;
-
-        @include reduced-motion {
-            animation: none;
-        }
+        font-size: 1.5rem;
+        color: $color-black;
+        animation: bounce 2s ease infinite;
     }
 }
 
-// -----------------------------------------------------------------------------
-// INSTRUCTIONS CHIP
-// -----------------------------------------------------------------------------
+// Instructions
 .instructions {
     position: absolute;
     bottom: 1rem;
     right: 1rem;
 
     p {
-        @include bp-label(0.64rem, $bp-text-mid);
-        @include bp-panel;
-        padding: 0.45rem 0.85rem;
+        font-family: $font-handwritten;
+        font-size: 0.9rem;
+        color: #888;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        border: 1px solid #eee;
     }
 
     @include mobile {
@@ -146,52 +102,12 @@ body {
         right: 1rem;
 
         p {
-            font-size: 0.58rem;
+            font-size: 0.75rem;
         }
     }
 }
 
-// -----------------------------------------------------------------------------
-// ANIMATIONS
-// -----------------------------------------------------------------------------
-@keyframes bp-fade-in {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-// A leader line being drawn downward and released.
-@keyframes bp-leader {
-    0% {
-        transform: scaleY(0);
-        transform-origin: top;
-        opacity: 0;
-    }
-
-    35% {
-        transform: scaleY(1);
-        transform-origin: top;
-        opacity: 1;
-    }
-
-    70% {
-        transform: scaleY(1);
-        transform-origin: bottom;
-        opacity: 1;
-    }
-
-    100% {
-        transform: scaleY(0);
-        transform-origin: bottom;
-        opacity: 0;
-    }
-}
-
-// Kept for components that still reference the old names.
+// Animations
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -202,31 +118,43 @@ body {
     }
 }
 
-// -----------------------------------------------------------------------------
-// ELEMENT RESETS
-// -----------------------------------------------------------------------------
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-8px);
+    }
+
+    60% {
+        transform: translateY(-4px);
+    }
+}
+
+// Prevent text selection on UI
 .ui-overlay,
 .scroll-hint,
 .instructions {
     user-select: none;
 }
 
+// Links reset
 a {
     color: inherit;
     text-decoration: none;
 }
 
+// Button reset
 button {
     background: none;
     border: none;
     cursor: pointer;
     font: inherit;
     color: inherit;
-}
-
-// Keyboard focus must stay visible — the 3D scene is otherwise very easy to
-// get lost in without a pointer.
-:focus-visible {
-    outline: 1px solid $bp-cyan;
-    outline-offset: 3px;
 }

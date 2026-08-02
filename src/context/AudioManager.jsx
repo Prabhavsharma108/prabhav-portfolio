@@ -87,6 +87,10 @@ export const AudioProvider = ({ children }) => {
             'door-hover': '/sounds/door-hover.mp3',   // hover on a door
             'door-open': '/sounds/door-open.mp3',
             'door-close': '/sounds/door-close.mp3',
+            // The paper tear used by the preloader and page transitions. Without
+            // this entry the name falls through to /sounds/tear.mp3, which does
+            // not exist — a silent 404 on every transition.
+            'tear': '/sounds/ui-sheet.mp3',
         };
         const path = soundPaths[soundName] || `/sounds/${soundName}.mp3`;
 

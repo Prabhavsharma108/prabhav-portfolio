@@ -1,5 +1,5 @@
 // =============================================================================
-// PRELOADER — the drawing sheet
+// PRELOADER STYLES - Paper Tear Edition
 // =============================================================================
 
 @use 'variables' as *;
@@ -8,163 +8,63 @@
 .preloader {
     @include fullscreen;
     z-index: $z-preloader;
+    // No background on container itself, the halves handle it
     pointer-events: auto;
     cursor: auto;
 
-    // Each half is a full-width copy of the sheet, clipped to its side of the
-    // centreline. Because both carry the same title block, cutting down the
-    // middle splits the block itself rather than sliding a seam past it.
     &__half {
         position: absolute;
         top: 0;
         bottom: 0;
-        width: 100%;
+        width: 100%; // Each half takes full width but is clipped
         height: 100%;
-        overflow: hidden;
+        background-color: $color-white;
+        background-image: url('/textures/paper-texture.webp');
+        background-size: cover;
+        background-position: center;
+        // background-blend-mode: multiply; // Optional depending on look
 
-        background-color: $bp-sheet;
-        @include blueprint-grid($grid-cell);
+        will-change: transform; // Optimize for the big move
 
-        // The sheet is only promoted for the one big transform at the end.
-        will-change: transform;
+        // Shadow to give depth to the tear? 
+        // Hard to do with clip-path on the element itself.
+        // We'd need an inner wrapper or drop-shadow filter (heavy).
+        // Let's keep it flat for now or maybe add a slight filter.
+        filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
     }
 
     &__half--left {
         left: 0;
+        // clip-path set inline
     }
 
     &__half--right {
         right: 0;
+        // clip-path set inline
     }
 
-    // The section cut. Hidden until the exit sequence draws it in.
-    &__cut {
+    &__overlay {
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         z-index: 10;
         pointer-events: none;
-        opacity: 0;
+
+        // Depending on implementation, SVG might need to scale differently
+        // We used preserveAspectRatio="none" in JSX to stretch it to viewport
     }
 
-    // -------------------------------------------------------------------------
-    // TITLE BLOCK
-    // Centred on the viewport rather than on the half, so the two copies line
-    // up exactly and read as one block until the cut.
-    // -------------------------------------------------------------------------
-    &__block {
+    &__percentage {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: min(30rem, 78vw);
+        font-family: $font-handwritten; // Or title font
+        font-size: 2rem;
+        color: $color-black; // Or opacity
         z-index: 20;
-
-        display: flex;
-        flex-direction: column;
-        gap: 1.6rem;
-        padding: 1.75rem 2rem;
-
-        border: 1px solid $bp-rule;
-        background: rgba(8, 19, 31, 0.55);
-    }
-
-    &__id {
-        display: flex;
-        flex-direction: column;
-        gap: 0.45rem;
-    }
-
-    &__name {
-        font-family: $font-display;
-        font-size: clamp(1.35rem, 4.4vw, 1.9rem);
-        font-weight: 700;
-        letter-spacing: 0.06em;
-        color: $bp-text;
-        white-space: nowrap;
-    }
-
-    &__role {
-        @include bp-label(0.68rem, $bp-cyan);
-    }
-
-    // --- progress, drawn as a dimension line ---------------------------------
-    &__meter {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    &__track {
-        position: relative;
-        flex: 1;
-        height: 1px;
-        background: $bp-rule;
-
-        // End ticks, the way a dimension line terminates on a drawing.
-        &::before,
-        &::after {
-            content: '';
-            position: absolute;
-            top: -4px;
-            width: 1px;
-            height: 9px;
-            background: $bp-rule;
-        }
-
-        &::before {
-            left: 0;
-        }
-
-        &::after {
-            right: 0;
-        }
-    }
-
-    &__fill {
-        position: absolute;
-        inset: 0;
-        background: $bp-cyan;
-        transform: scaleX(0);
-        transform-origin: left center;
-        box-shadow: 0 0 8px rgba(53, 200, 245, 0.6);
-    }
-
-    &__readout {
-        display: flex;
-        align-items: baseline;
-        gap: 0.15rem;
-        font-family: $font-mono;
-        font-variant-numeric: tabular-nums; // stops the width jittering
-        font-size: 1rem;
-        font-weight: 500;
-        color: $bp-text;
-    }
-
-    &__unit {
-        font-size: 0.7rem;
-        color: $bp-text-dim;
-    }
-
-    // --- drawing metadata ----------------------------------------------------
-    &__meta {
-        display: flex;
-        justify-content: space-between;
-        gap: 0.75rem;
-        padding-top: 1rem;
-        border-top: 1px solid $bp-rule;
-
-        span {
-            @include bp-label(0.58rem, $bp-text-dim);
-            white-space: nowrap;
-        }
-    }
-
-    @include mobile {
-        &__block {
-            padding: 1.35rem 1.4rem;
-            gap: 1.25rem;
-        }
+        mix-blend-mode: multiply; // Make it look written on paper
     }
 }

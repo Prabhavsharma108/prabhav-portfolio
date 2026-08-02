@@ -399,7 +399,7 @@ const ContactRoom = ({ showRoom, onReady, isExiting, isWarmup }) => {
                 rotation={[0, 0.2, 0]}
                 texturePath="/textures/contact/beczka.webp"
                 label="LINKEDIN"
-                onClick={() => window.open('https://www.linkedin.com/in/suyash-agrahari-717260228/', '_blank')}
+                onClick={() => window.open('https://www.linkedin.com/in/prabhav-sharma-8898362228', '_blank', 'noopener,noreferrer')}
                 paintOnBeforeCompile={onBeforeCompile}
                 paintUniforms={uniformsData}
             />
@@ -409,27 +409,27 @@ const ContactRoom = ({ showRoom, onReady, isExiting, isWarmup }) => {
                 rotation={[0, 0.3, 0]}
                 texturePath="/textures/contact/beczka.webp"
                 label="GITHUB"
-                onClick={() => window.open('https://github.com/suyashagrahari', '_blank')}
+                onClick={() => window.open('https://github.com/Prabhavsharma108', '_blank', 'noopener,noreferrer')}
                 paintOnBeforeCompile={onBeforeCompile}
                 paintUniforms={uniformsData}
             />
-            {/* FACEBOOK */}
+            {/* EMAIL — mirrors LinkedIn on the right so the pair stays balanced */}
             <SocialBarrel
                 position={isMobile ? [1.2, 0.5, -10] : [3, 0.5, -10]}
                 rotation={[0, -0.2, 0]}
                 texturePath="/textures/contact/beczka.webp"
-                label="TWITTER"
-                onClick={() => window.open('https://x.com/SuyashAgrahari', '_blank')}
+                label="EMAIL"
+                onClick={() => window.open('mailto:prabhavsharma109@gmail.com', '_self')}
                 paintOnBeforeCompile={onBeforeCompile}
                 paintUniforms={uniformsData}
             />
-            {/* INSTAGRAM */}
+            {/* RESUME — mirrors GitHub on the outer right */}
             <SocialBarrel
                 position={isMobile ? [1.5, -0.3, -7] : [5, -0.3, -8]}
                 rotation={[0, -0.3, 0]}
                 texturePath="/textures/contact/beczka.webp"
-                label="INSTAGRAM"
-                onClick={() => window.open('https://www.instagram.com/suyash_agrahari_/?utm_source=ig_web_button_share_sheet', '_blank')}
+                label="RESUME"
+                onClick={() => window.open('/Prabhav_Sharma_Resume.pdf', '_blank', 'noopener,noreferrer')}
                 paintOnBeforeCompile={onBeforeCompile}
                 paintUniforms={uniformsData}
             />

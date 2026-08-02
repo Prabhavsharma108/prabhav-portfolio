@@ -3,17 +3,22 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 
-import { FONT_DISPLAY, FONT_MONO } from '../../../config/fonts';
+// Local fonts for sketch-style typography (TTF format required by troika)
+const RUBIK_SCRIBBLE_URL = '/fonts/RubikScribble-Regular.ttf';
+const CABIN_SKETCH_URL = '/fonts/CabinSketch-Regular.ttf';
+
+// Global flag - draw animation only happens ONCE per page load
+let hasPlayedDrawAnimation = false;
 
 /**
- * HeroText
- *
- * The name and role, standing in the corridor at eye level. As the camera
- * approaches, the letters dodge outward so you pass *through* the name rather
- * than into it, then close again behind you.
- *
- * Scales fluidly with viewport width rather than at breakpoints, so the name
- * never clips on narrow screens.
+ * HeroText Component - Hand-drawn Style with Sketch Fonts
+ * 
+ * WOW Effects for Awwwards SOTD:
+ * - Name in Rubik Scribble font (splits into letters during scroll)
+ * - Creative developer in Cabin Sketch font (also splits)
+ * - Floating micro-animations
+ * - Parallax split effect
+ * - RESPONSIVE: scales down on mobile
  */
 const HeroText = ({ position = [0, 0.3, 0] }) => {
     const groupRef = useRef();
@@ -49,39 +54,25 @@ const HeroText = ({ position = [0, 0.3, 0] }) => {
     // Pre-allocate Vector3 to avoid per-frame garbage collection
     const worldPosVec = useRef(new THREE.Vector3());
 
-    // The name, laid out letter by letter so each can be dodged aside as the
-    // camera passes through. splitDir grows outward from the centre so the
-    // letters open like a pair of doors rather than sliding as a block.
-    const letters = useMemo(() => {
-        const name = 'PRABHAV';
-        const spacing = 0.55;
-        const mid = (name.length - 1) / 2;
-        return name.split('').map((char, i) => ({
-            char,
-            baseX: (i - mid) * spacing,
-            // Outermost letters travel furthest.
-            splitDir: ((i - mid) / mid) * 2.0,
-        }));
-    }, []);
-
-    // Tagline tokens, positioned by measuring the string so spacing stays even
-    // if the wording changes.
-    const taglineWords = useMemo(() => {
-        const words = ['<', 'Frontend', '&', 'AI', 'Engineer', '/>'];
-        const gap = 0.09;
-        const perChar = 0.085;
-        const widths = words.map((w) => w.length * perChar);
-        const total = widths.reduce((a, b) => a + b, 0) + gap * (words.length - 1);
-
-        let cursor = -total / 2;
-        const mid = (words.length - 1) / 2;
-
-        return words.map((text, i) => {
-            const baseX = cursor + widths[i] / 2;
-            cursor += widths[i] + gap;
-            return { text, baseX, splitDir: ((i - mid) / mid) * 2.0 };
-        });
-    }, []);
+    // Letter positions for the name split effect
+    const letters = useMemo(() => [
+        { char: 'P', baseX: -1.65, splitDir: -2.0, delay: 0 },
+        { char: 'R', baseX: -1.10, splitDir: -1.4, delay: 0 },
+        { char: 'A', baseX: -0.55, splitDir: -0.8, delay: 0 },
+        { char: 'B', baseX: 0.00, splitDir: 0.0, delay: 0 },
+        { char: 'H', baseX: 0.55, splitDir: 0.8, delay: 0 },
+        { char: 'A', baseX: 1.10, splitDir: 1.4, delay: 0 },
+        { char: 'V', baseX: 1.65, splitDir: 2.0, delay: 0 },
+    ], []);
+    // Tagline words for split effect
+    const taglineWords = useMemo(() => [
+        { text: '<',           baseX: -1.75, splitDir: -2.0, delay: 0 },
+        { text: 'Frontend',    baseX: -1.15, splitDir: -1.3, delay: 0 },
+        { text: '&',           baseX: -0.55, splitDir: -0.7, delay: 0 },
+        { text: 'AI',          baseX: -0.20, splitDir: -0.3, delay: 0 },
+        { text: 'Engineer',    baseX: 0.45,  splitDir: 0.6, delay: 0 },
+        { text: '/>',          baseX: 1.10,  splitDir: 2.0, delay: 0 },
+    ], []);
 
     // Animation loop
     useFrame((state, delta) => {
@@ -144,38 +135,39 @@ const HeroText = ({ position = [0, 0.3, 0] }) => {
 
     return (
         <group ref={groupRef} position={position} scale={[scale, scale, 1]}>
-            {/* The name. Keyed by index, not by character — "PRABHAV" repeats
-                the letter A, and a character key would collide. */}
+            {/* Name letters - Rubik Scribble font with fade-in animation */}
             {letters.map((letter, i) => (
                 <Text
-                    key={`ltr-${i}`}
+                    // Keyed by index, not character: "PRABHAV" repeats the
+                    // letter A, and a character key would collide.
+                    key={`letter-${i}`}
                     ref={(el) => (letterRefs.current[i] = el)}
                     position={[letter.baseX, 0.2, 0]}
                     fontSize={0.9}
-                    font={FONT_DISPLAY}
-                    color="#eaf6ff"
-                    outlineWidth={0.014}
-                    outlineColor="#35c8f5"
+                    font={RUBIK_SCRIBBLE_URL}
+                    color="#ffffff"
+                    outlineWidth={0.012}
+                    outlineColor="#1a1a1a"
                     anchorX="center"
                     anchorY="middle"
-                    letterSpacing={0.02}
+                    letterSpacing={0}
                 >
                     {letter.char}
                 </Text>
             ))}
 
-            {/* Tagline, set in the blueprint's annotation voice. */}
+            {/* Tagline words - Cabin Sketch font with fade-in animation */}
             {taglineWords.map((word, i) => (
                 <Text
-                    key={`tag-${i}`}
+                    key={`word-${i}`}
                     ref={(el) => (taglineRefs.current[i] = el)}
                     position={[word.baseX, -0.55, 0.3]}
                     fontSize={0.16}
-                    font={FONT_MONO}
-                    color="#7fb4d0"
+                    font={CABIN_SKETCH_URL}
+                    color="#555555"
                     anchorX="center"
                     anchorY="middle"
-                    letterSpacing={0.06}
+                    letterSpacing={0.04}
                 >
                     {word.text}
                 </Text>

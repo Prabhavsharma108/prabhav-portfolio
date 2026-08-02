@@ -1,220 +1,374 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { useAudio } from '../../context/AudioManager';
 
-/**
- * Preloader
- *
- * The drawing sheet. While assets load, the title block fills in and a
- * dimension line measures out progress; when the scene is ready the sheet is
- * cut down its centreline and the two halves are drawn off the table.
- *
- * Progress is driven entirely through refs and GSAP, writing to the DOM
- * directly. Re-rendering React 60 times a second here would compete with the
- * very asset decoding this screen exists to cover.
- */
-
-/** ISO section cut — a dash-dot centreline with ticks at each end. */
-const CutLine = ({ pathRef }) => (
-    <svg
-        className="preloader__cut"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-    >
-        <path
-            ref={pathRef}
-            d="M 50 0 L 50 100"
-            fill="none"
-            stroke="#35c8f5"
-            strokeWidth="0.22"
-            strokeDasharray="4 1.4 0.6 1.4"
-            vectorEffect="non-scaling-stroke"
-        />
-    </svg>
+// Reusable SVG Line Component (now accepts ref)
+const TearLineSVG = ({ svgPathData, pathLength, strokeDashoffset, pathRef }) => (
+  <svg
+    className="preloader__overlay"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+    style={{ pointerEvents: 'none' }}
+  >
+    <path
+      ref={pathRef}
+      d={svgPathData}
+      fill="none"
+      stroke="#1a1a1a"
+      strokeWidth="0.1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{
+        strokeDasharray: pathLength,
+        strokeDashoffset: strokeDashoffset,
+      }}
+    />
+  </svg>
 );
 
+// New Ring Loader - Cleaner circle that spins around text
+const RingLoader = () => (
+  <div className="preloader__ring">
+    <svg width="120" height="120" viewBox="0 0 100 100" style={{ overflow: 'visible' }}>
+      <circle
+        cx="50" cy="50" r="45"
+        fill="none"
+        stroke="#000"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeDasharray="10 15"
+        opacity="0.8"
+      />
+      <circle
+        cx="50" cy="50" r="35"
+        fill="none"
+        stroke="#000"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeDasharray="5 10"
+        opacity="0.5"
+        style={{
+          animation: 'ring-spin-reverse 4s linear infinite',
+          transformOrigin: '50% 50%'
+        }}
+      />
+    </svg>
+    <style>{`
+      @keyframes ring-spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+      @keyframes ring-spin-reverse {
+        0% { transform: rotate(360deg); }
+        100% { transform: rotate(0deg); }
+      }
+      .preloader__ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 120px;
+        height: 120px;
+        pointer-events: none;
+        z-index: 5;
+        animation: ring-spin 10s linear infinite;
+      }
+    `}</style>
+  </div>
+);
+
+const percentageStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '0',
+  width: '100%',
+  transform: 'translateY(-50%)',
+  textAlign: 'center',
+  zIndex: 20,
+  fontFamily: "'Inter', sans-serif",
+  fontSize: '2rem',
+  fontWeight: 'bold',
+  mixBlendMode: 'multiply',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  overflow: 'visible'
+};
+
 const Preloader = ({ onComplete, ready }) => {
-    const [isDone, setIsDone] = useState(false);
-    const [realProgress, setRealProgress] = useState(0);
-    const [active, setActive] = useState(true);
-    const [targetProgress, setTargetProgress] = useState(0);
+  const [isDone, setIsDone] = useState(false);
 
-    const { play } = useAudio();
+  // Custom throttled progress state to prevent React 'Maximum update depth exceeded'
+  const [realProgress, setRealProgress] = useState(0);
+  const [active, setActive] = useState(true);
 
-    const containerRef = useRef(null);
-    const leftHalfRef = useRef(null);
-    const rightHalfRef = useRef(null);
-    const cutLeftRef = useRef(null);
-    const cutRightRef = useRef(null);
-    const readoutLeftRef = useRef(null);
-    const readoutRightRef = useRef(null);
-    const barLeftRef = useRef(null);
-    const barRightRef = useRef(null);
+  useEffect(() => {
+    let t = 0;
+    const origOnStart = THREE.DefaultLoadingManager.onStart;
+    const origOnProgress = THREE.DefaultLoadingManager.onProgress;
+    const origOnLoad = THREE.DefaultLoadingManager.onLoad;
 
-    const displayProgressRef = useRef(0);
-    const trackerRef = useRef({ val: 0 });
-    const readyRef = useRef(ready);
-    const exitStarted = useRef(false);
-
-    useEffect(() => {
-        readyRef.current = ready;
-    }, [ready]);
-
-    // --- Track three.js asset loading -------------------------------------
-    useEffect(() => {
-        let raf = 0;
-        const manager = THREE.DefaultLoadingManager;
-        const origOnStart = manager.onStart;
-        const origOnProgress = manager.onProgress;
-        const origOnLoad = manager.onLoad;
-
-        manager.onStart = (url, loaded, total) => {
-            setActive(true);
-            origOnStart?.(url, loaded, total);
-        };
-
-        // Coalesce to one state write per frame — the loader fires this per
-        // asset and can otherwise overflow React's update depth.
-        manager.onProgress = (url, loaded, total) => {
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(() => setRealProgress((loaded / total) * 100));
-            origOnProgress?.(url, loaded, total);
-        };
-
-        manager.onLoad = () => {
-            cancelAnimationFrame(raf);
-            setRealProgress(100);
-            setActive(false);
-            origOnLoad?.();
-        };
-
-        return () => {
-            cancelAnimationFrame(raf);
-            manager.onStart = origOnStart;
-            manager.onProgress = origOnProgress;
-            manager.onLoad = origOnLoad;
-        };
-    }, []);
-
-    // Assets only account for 85% of the bar; the rest is shader compilation,
-    // which reports nothing. Holding at 90 until `ready` avoids the bar sitting
-    // at 100% while the scene is visibly still warming up.
-    useEffect(() => {
-        const next = active ? (realProgress / 100) * 85 : ready ? 100 : 90;
-        setTargetProgress((prev) => Math.max(prev, next));
-    }, [realProgress, active, ready]);
-
-    useEffect(() => {
-        const distance = targetProgress - displayProgressRef.current;
-        const duration = distance > 60 ? 1.5 : distance > 30 ? 1.0 : distance > 10 ? 0.6 : 0.4;
-
-        gsap.to(trackerRef.current, {
-            val: targetProgress,
-            duration,
-            ease: 'power2.out',
-            overwrite: true,
-            onUpdate: () => {
-                const val = Math.min(100, Math.max(0, trackerRef.current.val));
-                displayProgressRef.current = val;
-
-                const text = `${Math.round(val).toString().padStart(3, '0')}`;
-                if (readoutLeftRef.current) readoutLeftRef.current.innerText = text;
-                if (readoutRightRef.current) readoutRightRef.current.innerText = text;
-                if (barLeftRef.current) barLeftRef.current.style.transform = `scaleX(${val / 100})`;
-                if (barRightRef.current) barRightRef.current.style.transform = `scaleX(${val / 100})`;
-
-                if (val >= 99.5 && readyRef.current && !exitStarted.current) startExit();
-            },
-        });
-    }, [targetProgress]);
-
-    // Covers the case where `ready` flips true after the bar already hit 100.
-    useEffect(() => {
-        if (displayProgressRef.current >= 99.5 && ready && !exitStarted.current) startExit();
-    }, [ready]);
-
-    const startExit = () => {
-        exitStarted.current = true;
-        play('ui-sheet', { volume: 0.5 });
-
-        const tl = gsap.timeline({
-            onComplete: () => {
-                setIsDone(true);
-                onComplete?.();
-            },
-        });
-
-        // The cut is made first, then the halves are drawn off the table.
-        tl.to([cutLeftRef.current, cutRightRef.current], {
-            opacity: 1,
-            duration: 0.25,
-            ease: 'none',
-        });
-
-        tl.to(leftHalfRef.current, { xPercent: -100, duration: 1.5, ease: 'power3.inOut' }, 'cut');
-        tl.to(rightHalfRef.current, { xPercent: 100, duration: 1.5, ease: 'power3.inOut' }, 'cut');
-        tl.to(containerRef.current, { opacity: 0, duration: 0.45 }, '-=0.45');
+    THREE.DefaultLoadingManager.onStart = (url, loaded, total) => {
+      setActive(true);
+      origOnStart?.(url, loaded, total);
     };
 
-    if (isDone) return null;
+    THREE.DefaultLoadingManager.onProgress = (url, loaded, total) => {
+      cancelAnimationFrame(t);
+      t = requestAnimationFrame(() => {
+        setRealProgress((loaded / total) * 100);
+      });
+      origOnProgress?.(url, loaded, total);
+    };
 
-    const initial = `${Math.round(displayProgressRef.current).toString().padStart(3, '0')}`;
+    THREE.DefaultLoadingManager.onLoad = () => {
+      cancelAnimationFrame(t);
+      setRealProgress(100);
+      setActive(false);
+      
+      const loadEnd = performance.now();
+      const loadDuration = ((loadEnd - loadStartTime.current) / 1000).toFixed(2);
+      // console.info(`📦 Assets Loaded: ${loadDuration}s`);
+      
+      origOnLoad?.();
+    };
 
-    // Each half carries a full copy of the title block, clipped to its side of
-    // the cut. When they separate, the block splits cleanly down the middle.
-    const titleBlock = (readoutRef, barRef) => (
-        <div className="preloader__block">
-            <div className="preloader__id">
-                <span className="preloader__name">PRABHAV SHARMA</span>
-                <span className="preloader__role">Frontend &amp; AI Engineer</span>
-            </div>
+    return () => {
+      THREE.DefaultLoadingManager.onStart = origOnStart;
+      THREE.DefaultLoadingManager.onProgress = origOnProgress;
+      THREE.DefaultLoadingManager.onLoad = origOnLoad;
+    };
+  }, []);
 
-            <div className="preloader__meter">
-                <div className="preloader__track">
-                    <div className="preloader__fill" ref={barRef} />
-                </div>
-                <div className="preloader__readout">
-                    <span ref={readoutRef}>{initial}</span>
-                    <span className="preloader__unit">%</span>
-                </div>
-            </div>
+  const { play } = useAudio();
 
-            <div className="preloader__meta">
-                <span>DWG. PS-2026</span>
-                <span>SCALE 1:1</span>
-                <span>REV. 02</span>
-            </div>
+  // Performance Tracking
+  const loadStartTime = useRef(performance.now());
+
+  // Use refs for animation targets
+  const containerRef = useRef(null);
+  const leftHalfRef = useRef(null);
+  const rightHalfRef = useRef(null);
+  const pathLeftRef = useRef(null);
+  const pathRightRef = useRef(null);
+  const textLeftRef = useRef(null);
+  const textRightRef = useRef(null);
+
+  // Track visual progress entirely in refs to skip React renders 60x/sec!
+  const [targetProgress, setTargetProgress] = useState(0);
+  const displayProgressRef = useRef(0);
+  const trackerRef = useRef({ val: 0 });
+  const readyRef = useRef(ready);
+
+  useEffect(() => { readyRef.current = ready; }, [ready]);
+
+  // ----------------------------------------
+  // GENERATE TEAR PATH
+  // ----------------------------------------
+  const tearPoints = useMemo(() => {
+    const points = [];
+    const segments = 12; // Fewer segments
+
+    points.push([50, 0]);
+
+    for (let i = 1; i < segments; i++) {
+      const y = (i / segments) * 100;
+      const xOffset = (Math.random() - 0.5) * 6;
+      const x = 50 + xOffset;
+      points.push([x, y]);
+    }
+
+    points.push([50, 100]);
+    return points;
+  }, []);
+
+  const svgPathData = useMemo(() => {
+    return tearPoints.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p[0]} ${p[1]} `).join(' ');
+  }, [tearPoints]);
+
+  const leftClipPoly = useMemo(() => {
+    let poly = '0% 0%, ';
+    tearPoints.forEach(p => { poly += `${p[0]}% ${p[1]}%, `; });
+    poly += '0% 100%';
+    return `polygon(${poly})`;
+  }, [tearPoints]);
+
+  const rightClipPoly = useMemo(() => {
+    let poly = '100% 0%, ';
+    poly += '100% 100%, ';
+    [...tearPoints].reverse().forEach(p => { poly += `${p[0]}% ${p[1]}%, `; });
+    return `polygon(${poly.slice(0, -2)})`;
+  }, [tearPoints]);
+
+
+  // ----------------------------------------
+  // SMOOTH LOADING LOGIC
+  // ----------------------------------------
+  useEffect(() => {
+    let newTarget = 0;
+    if (active) {
+      newTarget = (realProgress / 100) * 85;
+    } else {
+      if (ready) {
+        newTarget = 100;
+      } else {
+        newTarget = 90;
+      }
+    }
+
+    setTargetProgress(prev => Math.max(prev, newTarget));
+  }, [realProgress, active, ready]);
+
+  // There is no pencil sound file, so the loop that used to run here only
+  // produced a failed request on every load. Removed rather than left silent.
+  const checkProgressTriggers = (val) => {
+    if (val >= 99.5 && readyRef.current && !exitStarted.current) {
+      exitStarted.current = true;
+      startExit();
+    }
+  };
+
+  useEffect(() => {
+    const distance = targetProgress - displayProgressRef.current;
+    let duration = 0.5;
+
+    if (distance > 60) {
+      duration = 1.5;
+    } else if (distance > 30) {
+      duration = 1.0;
+    } else if (distance > 10) {
+      duration = 0.6;
+    } else if (distance > 0) {
+      duration = 0.4;
+    }
+
+    gsap.to(trackerRef.current, {
+      val: targetProgress,
+      duration: duration,
+      ease: "power2.out",
+      overwrite: true, // Auto kill previous tweens on trackerRef
+      onUpdate: () => {
+        const val = trackerRef.current.val;
+        displayProgressRef.current = val;
+
+        const safeProgress = Math.min(100, Math.max(0, val));
+        const strokeDashoffset = 120 - (120 * safeProgress) / 100;
+        const percentageText = `${Math.round(safeProgress)}%`;
+
+        // Direct DOM manipulation - BYPASS React Render!
+        if (textLeftRef.current) textLeftRef.current.innerText = percentageText;
+        if (textRightRef.current) textRightRef.current.innerText = percentageText;
+        if (pathLeftRef.current) pathLeftRef.current.style.strokeDashoffset = strokeDashoffset;
+        if (pathRightRef.current) pathRightRef.current.style.strokeDashoffset = strokeDashoffset;
+
+        checkProgressTriggers(val);
+      }
+    });
+
+  }, [targetProgress]);
+
+
+  // ----------------------------------------
+  // EXIT SEQUENCE
+  // ----------------------------------------
+  const exitStarted = useRef(false);
+
+  // Fallback trigger if ready becomes true AFTER 99.5% reached
+  useEffect(() => {
+    if (displayProgressRef.current >= 99.5 && ready && !exitStarted.current) {
+      exitStarted.current = true;
+      startExit();
+    }
+  }, [ready]);
+
+  const startExit = () => {
+    exitStarted.current = true;
+
+    play('tear', { volume: 0.8 });
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setIsDone(true);
+        
+        const exitEnd = performance.now();
+        const totalDuration = ((exitEnd - loadStartTime.current) / 1000).toFixed(2);
+        // console.group("⏱️ Portfolio Loading Performance");
+        // console.log(`- Start: %c${loadStartTime.current.toFixed(0)}ms`, "color: #888");
+        // console.log(`- Total Duration: %c${totalDuration}s`, "color: #00ff00; font-weight: bold;");
+        // console.groupEnd();
+        
+        onComplete?.();
+      }
+    });
+
+    // 1. Quick pause before tear
+    tl.to({}, { duration: 0.1 });
+
+    // 2. Tear Apart
+    tl.to(leftHalfRef.current, {
+      xPercent: -100,
+      rotation: -2,
+      duration: 1.8,
+      ease: "power3.inOut"
+    }, 'tear');
+
+    tl.to(rightHalfRef.current, {
+      xPercent: 100,
+      rotation: 2,
+      duration: 1.8,
+      ease: "power3.inOut"
+    }, 'tear');
+
+    // 3. Fade container
+    tl.to(containerRef.current, {
+      opacity: 0,
+      duration: 0.5
+    }, '-=0.5');
+  };
+
+  if (isDone) return null;
+
+  const pathLength = 120;
+  // Initialize values
+  const safeProgress = Math.min(100, Math.max(0, displayProgressRef.current));
+  const strokeDashoffset = pathLength - (pathLength * safeProgress) / 100;
+  const percentageText = `${Math.round(safeProgress)}%`;
+
+  return (
+    <div className="preloader" ref={containerRef}>
+      {/* LEFT HALF */}
+      <div
+        className="preloader__half preloader__half--left"
+        ref={leftHalfRef}
+        style={{ clipPath: leftClipPoly }}
+      >
+        {/* Content: Percentage & Line */}
+        <div className="preloader__percentage" style={percentageStyle}>
+          <span ref={textLeftRef}>{percentageText}</span>
+          <RingLoader />
         </div>
-    );
 
-    return (
-        <div
-            className="preloader"
-            ref={containerRef}
-            role="progressbar"
-            aria-label="Loading portfolio"
-        >
-            <div
-                className="preloader__half preloader__half--left"
-                ref={leftHalfRef}
-                style={{ clipPath: 'polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%)' }}
-            >
-                {titleBlock(readoutLeftRef, barLeftRef)}
-                <CutLine pathRef={cutLeftRef} />
-            </div>
+        {/* SVG is now INSIDE the clipped half */}
+        <TearLineSVG pathRef={pathLeftRef} svgPathData={svgPathData} pathLength={pathLength} strokeDashoffset={strokeDashoffset} />
+      </div>
 
-            <div
-                className="preloader__half preloader__half--right"
-                ref={rightHalfRef}
-                style={{ clipPath: 'polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)' }}
-            >
-                {titleBlock(readoutRightRef, barRightRef)}
-                <CutLine pathRef={cutRightRef} />
-            </div>
+      {/* RIGHT HALF */}
+      <div
+        className="preloader__half preloader__half--right"
+        ref={rightHalfRef}
+        style={{ clipPath: rightClipPoly }}
+      >
+        {/* Content: Percentage & Line */}
+        <div className="preloader__percentage" style={percentageStyle}>
+          <span ref={textRightRef}>{percentageText}</span>
+          <RingLoader />
         </div>
-    );
+
+        {/* SVG is now INSIDE the clipped half */}
+        <TearLineSVG pathRef={pathRightRef} svgPathData={svgPathData} pathLength={pathLength} strokeDashoffset={strokeDashoffset} />
+      </div>
+    </div>
+  );
 };
 
 export default Preloader;

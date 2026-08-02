@@ -2,7 +2,6 @@ import { useState, useCallback, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 
 import CorridorSegment, { SEGMENT_LENGTH } from './CorridorSegment';
-import { useShellClock } from '../shaders/blueprintShell';
 
 /**
  * Wrapper to toggle segment visibility based on camera position.
@@ -56,11 +55,6 @@ const InfiniteCorridorManager = ({
     setCameraOverride // Function to take over camera control
 }) => {
     const { camera } = useThree();
-
-    // The blueprint shell shares one material across every segment, so its
-    // clock is advanced once here rather than per-surface.
-    useShellClock();
-
     // Pre-mount segments 0 and 1 so shaders compile during preloader.
     // Segment -1 is NOT pre-mounted to avoid visual collision with entrance doors.
     // It mounts dynamically when camera reaches entrance (behind camera = invisible stutter).

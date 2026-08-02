@@ -9,7 +9,7 @@ import { useAchievements } from '../../../context/AchievementsContext';
 import { isTouchDevice } from '../../../utils/deviceDetect';
 
 // Use same font as App.jsx preload (Inter) - works reliably
-const FONT_URL = '/fonts/JetBrainsMono.ttf';
+const FONT_URL = 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff';
 
 
 
@@ -298,7 +298,7 @@ const EntranceDoors = ({
             ease: 'power2.out'
         }, 0.1);
 
-        // Camera flies through - STOP CLOSER to avatar/ITOM
+        // Camera flies through - STOP CLOSER to avatar / hero name
         tl.to(camera.position, {
             z: 11,  // Closer stop point (was 11)
             y: 0.2, // Match hook's base Y position
@@ -935,7 +935,7 @@ const EntranceDoors = ({
                 color="#1a1a1a"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/SpaceGrotesk.ttf"
+                font="/fonts/CabinSketch-Bold.ttf"
                 outlineWidth={0.015}
                 outlineColor="#ffffff"
                 clipRect={[-1, -0.5, -1 + (clipProgress * 2.5), 0.5]}

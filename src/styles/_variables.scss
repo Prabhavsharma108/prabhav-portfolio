@@ -1,83 +1,35 @@
 // =============================================================================
-// DESIGN TOKENS — Prabhav Sharma / Blueprint
-//
-// The whole site is styled as a software engineering blueprint: a drafting
-// sheet where the things being drawn are systems, not machines. Everything
-// below exists to keep that metaphor consistent — surfaces are "sheets",
-// strokes are "lines", and highlights are "annotations".
+// DESIGN TOKENS - Prabhav Sharma Portfolio
 // =============================================================================
 
-// --- Surfaces -----------------------------------------------------------
-// Darkest to lightest. Sheets stack; each step up is a layer closer to the eye.
-$bp-void: #050b14; // beyond the sheet — fog, deep background
-$bp-ink: #08131f; // the drafting table
-$bp-sheet: #0c1e30; // the blueprint sheet itself
-$bp-sheet-lift: #123048; // a raised panel / callout box
-$bp-sheet-high: #1a4260; // hover + active surfaces
+// Colors
+$color-white: #FFFFFF;
+$color-black: #0A0A0A;
+$color-gray: #1A1A1A;
+$color-neon-green: #39FF14;
 
-// --- Linework -----------------------------------------------------------
-// Blueprint grids read as two densities: a fine minor grid and a heavier
-// major grid every 5th line. Keep these low-alpha or the screen buzzes.
-$bp-grid-minor: rgba(126, 202, 242, 0.06);
-$bp-grid-major: rgba(126, 202, 242, 0.13);
-$bp-rule: rgba(126, 202, 242, 0.22); // dividers, borders
-$bp-line: #4d9bc4; // standard drafting stroke
-$bp-line-bright: #a4d8f2; // emphasised stroke / leader lines
+// Typography
+$font-title: 'Gloria Hallelujah', cursive;
+$font-handwritten: 'Caveat', cursive;
+$font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-// --- Signal colours -----------------------------------------------------
-// Used sparingly. Cyan is the primary voice; amber marks anything the
-// visitor should act on; green/red are reserved for state, never decoration.
-$bp-cyan: #35c8f5;
-$bp-cyan-soft: rgba(53, 200, 245, 0.16);
-$bp-amber: #ffb454; // annotations, callouts, CTAs
-$bp-amber-soft: rgba(255, 180, 84, 0.16);
-$bp-green: #56d9a3; // "shipped" / success
-$bp-red: #ff6b6b; // errors only
-
-// --- Type ---------------------------------------------------------------
-$bp-text: #d8ecf9;
-$bp-text-mid: #91b2c8;
-$bp-text-dim: #5f7c92;
-
-// --- Typography ---------------------------------------------------------
-// Mono carries the blueprint voice (labels, dimensions, annotations).
-// Display is for headings only. Body is for anything longer than a line.
-$font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-$font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-$font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-
-// Kept as aliases so older component styles don't break mid-refactor.
-$font-primary: $font-body;
-$font-title: $font-display;
-
-// Blueprint labels are always uppercase and widely tracked — this pairing
-// shows up often enough to be worth a token.
-$track-label: 0.14em;
-$track-title: 0.02em;
-
-// --- Layout -------------------------------------------------------------
+// Breakpoints
 $breakpoint-mobile: 480px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1024px;
 $breakpoint-wide: 1440px;
 
-$grid-cell: 28px; // base blueprint grid pitch (major = 5x)
-
-// --- Z-index ------------------------------------------------------------
+// Z-index layers
+$z-preloader: 100;
 $z-canvas: 1;
 $z-ui: 50;
-$z-overlay: 80;
-$z-preloader: 100;
 
-// --- Motion -------------------------------------------------------------
-// Drafting motion is mechanical: linear-ish, precise, no bouncy easing.
-$ease-draft: cubic-bezier(0.22, 0.61, 0.36, 1);
-$ease-snap: cubic-bezier(0.4, 0, 0.2, 1);
-$transition-fast: 0.18s $ease-snap;
-$transition-normal: 0.36s $ease-draft;
-$transition-slow: 0.7s $ease-draft;
+// Transitions
+$transition-fast: 0.2s ease;
+$transition-normal: 0.4s ease;
+$transition-slow: 0.8s ease;
 
-// --- Spacing ------------------------------------------------------------
+// Spacing
 $spacing-xs: 0.5rem;
 $spacing-sm: 1rem;
 $spacing-md: 2rem;

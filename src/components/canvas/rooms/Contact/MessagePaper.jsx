@@ -6,7 +6,7 @@ import * as THREE from 'three';
 
 const PAPER_WIDTH = 1.51; // Legacy ratio 1197/1340
 const PAPER_HEIGHT = 1.7;
-const FONT_PATH = '/fonts/JetBrainsMono.ttf';
+const FONT_PATH = '/fonts/CabinSketch-Regular.ttf';
 
 // Helper: Interactive Text Field with Smooth Animation and Invisible Hitbox
 const InteractiveTextField = ({
@@ -146,8 +146,10 @@ const SmoothButton = ({ texture, onClick, position, size, text, fontPath }) => {
     );
 };
 
-// Web3Forms API Key
-const WEB3FORMS_KEY = '2ceaee50-a31e-4936-98fc-ca9648b21cdd';
+// Web3Forms access key — this decides whose inbox the contact form delivers to,
+// so it must never be hard-coded. Set VITE_WEB3FORMS_KEY in the environment
+// (Vercel project settings, or a local .env). Get a key at https://web3forms.com.
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 
 const MessagePaper = ({ position = [0, 0.05, 2], onSend }) => {
     const groupRef = useRef();
@@ -228,6 +230,14 @@ const MessagePaper = ({ position = [0, 0.05, 2], onSend }) => {
         setSubmitStatus(null);
 
         if (!validateForm()) {
+            return;
+        }
+
+        // Without a key the request would fail anyway; failing loudly here beats
+        // showing the visitor a success tick for a message that went nowhere.
+        if (!WEB3FORMS_KEY) {
+            console.error('[Contact] VITE_WEB3FORMS_KEY is not set — the form cannot deliver.');
+            setSubmitStatus('error');
             return;
         }
 

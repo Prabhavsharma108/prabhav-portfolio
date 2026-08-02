@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import CorridorWalls from './CorridorWalls';
 import DoorSection from './DoorSection';
 import SegmentDoors from './SegmentDoors';
-import ScaleFigure from './ScaleFigure';
+import Avatar from './Avatar';
 import HeroText from './HeroText';
 import Doodles from './Doodles';
 import CorridorDecorations from './CorridorDecorations';
@@ -14,7 +14,7 @@ import CorridorDecorations from './CorridorDecorations';
  * CorridorSegment Component
  * 
  * A single repeatable chunk of the infinite corridor.
- * Each segment contains: walls, avatar, ITOM text, doors, decorations.
+ * Each segment contains: walls, avatar, hero name, doors, decorations.
  * 
  * Segment length: 80 units
  * Positioned based on segmentIndex * segmentLength
@@ -118,11 +118,11 @@ const CorridorSegment = ({
 
             {/* === WELCOME AREA (Start of segment) - MOVED CLOSER === */}
             <group position={[0, 0, zOffset - 2]}>
-                {/* ITOM Text - centered (ITOM letters adjusted internally) */}
+                {/* Hero name text - centered (letters positioned internally) */}
                 <HeroText position={[0, -0.1, -0.5]} />
 
-                {/* Scale figure - centre of the corridor */}
-                <ScaleFigure position={[0, -0.61, -0.3]} />
+                {/* Avatar - center */}
+                <Avatar position={[0, -0.61, -0.3]} />
 
 
                 {/* Doodles around avatar */}

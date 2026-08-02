@@ -167,7 +167,7 @@ const StoryMilestone = ({
                 color={styles.titleColor}
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/SpaceGrotesk.ttf"
+                font="/fonts/CabinSketch-Bold.ttf"
                 fillOpacity={0}
             >
                 {title}
@@ -182,7 +182,7 @@ const StoryMilestone = ({
                     color={styles.subtitleColor}
                     anchorX="center"
                     anchorY="middle"
-                    font="/fonts/JetBrainsMono.ttf"
+                    font="/fonts/CabinSketch-Regular.ttf"
                     fillOpacity={0}
                 >
                     {subtitle}

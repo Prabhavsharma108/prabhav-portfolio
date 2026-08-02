@@ -23,7 +23,7 @@ const ENTRANCE_DOORS_Z = 22;
  * Flow:
  * 1. Preloader fades out -> user sees 3D entrance doors
  * 2. Click doors -> they open + camera flies through
- * 3. Behind doors: infinite corridor with ITOM
+ * 3. Behind doors: infinite corridor with the hero name
  */
 const Experience = ({ isLoaded, onSceneReady, performanceTier }) => {
     // Use SceneContext for room state

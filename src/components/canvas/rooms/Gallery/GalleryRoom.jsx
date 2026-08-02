@@ -35,39 +35,39 @@ export const GALLERY_INTERACTION_AUDIO_SETTINGS = {
 // Define the unique projects and their textures
 const UNIQUE_PROJECTS = [
     {
-        id: 'monetune',
-        title: 'MULTI-AGENT',
+        id: 'rankshoot',
+        title: 'RANKSHOOT',
         front: '/textures/gallery/monetuneprzod.webp',
         painted: '/textures/gallery/monetuneprzod_painted.webp',
-        url: 'https://github.com/suyashagrahari',
-        description: 'Architected decentralized multi-agent system using A2A protocol + JSON-RPC 2.0. Built 10 specialized agents using OpenAI function calling and LangChain for stateful coordination. Implemented self-healing code review agent achieving 95%+ code quality improvement.',
-        techStack: ['/textures/gallery/reactlogo.webp', '/textures/gallery/jslogo.webp', '/textures/gallery/htmllogo.webp', '/textures/gallery/netlifylogo.webp']
+        url: 'https://rankshoot.com',
+        description: 'Founder & Product Engineer. An AI SEO automation platform built end to end on Next.js, React, Node.js, PostgreSQL and LLM APIs. Agent-based pipelines draft blogs, metadata, FAQs and internal links, cutting manual content production effort by over 80%. I designed and deployed the whole system — auth, analytics, billing and cloud infrastructure — now serving multiple beta customers.',
+        techStack: ['/textures/gallery/reactlogo.webp', '/textures/gallery/jslogo.webp', '/textures/gallery/tailwindlogo.webp', '/textures/gallery/netlifylogo.webp']
     },
     {
-        id: 'timber',
-        title: 'AI INTERVIEW',
+        id: 'cadence-chatbot',
+        title: 'AI CHATBOT',
         front: '/textures/gallery/timberkittyprzod.webp',
         painted: '/textures/gallery/timberkittyprzod_painted.webp',
-        url: 'https://github.com/suyashagrahari',
-        description: 'Built AI interview system using OpenAI function calling and Kokoro TTS for adaptive interviews with analytics and scoring. Developed anti-cheating proctoring system with face detection, tab monitoring, and copy-paste detection achieving 95%+ accuracy.',
+        url: 'https://github.com/Prabhavsharma108',
+        description: 'Rebuilt Cadence Pro\'s flagship AI chatbot in React, TypeScript and Tailwind around a reusable component architecture, which cut UI development effort substantially. Added real-time mention search backed by a trie so suggestions stayed instant as the workspace grew.',
+        techStack: ['/textures/gallery/reactlogo.webp', '/textures/gallery/jslogo.webp', '/textures/gallery/tailwindlogo.webp', '/textures/gallery/htmllogo.webp']
+    },
+    {
+        id: 'multi-agent',
+        title: 'MULTI-AGENT',
+        front: '/textures/gallery/youngmultiprzod.webp',
+        painted: '/textures/gallery/youngmultiprzod_painted.webp',
+        url: 'https://github.com/Prabhavsharma108',
+        description: 'Multi-agent project-planning workflows on LangGraph and LangChain — agents that decompose a goal into tasks and reconcile them against work already in flight. Shipped alongside Slack and GitHub integrations over OAuth, webhooks and REST so it reached engineers inside their existing workflow.',
         techStack: ['/textures/gallery/reactlogo.webp', '/textures/gallery/jslogo.webp', '/textures/gallery/htmllogo.webp', '/textures/gallery/firebaselogo.webp']
     },
     {
-        id: 'young',
-        title: 'DRAWFLOW',
-        front: '/textures/gallery/youngmultiprzod.webp',
-        painted: '/textures/gallery/youngmultiprzod_painted.webp',
-        url: 'https://drawflow.in',
-        description: 'Founder & Solo Architect. Built an open-source collaborative diagramming platform delivering Excalidraw-level premium features for free using React, WebRTC, WebSockets, and Node.js. Led product architecture, growth, and community.',
-        techStack: ['/textures/gallery/reactlogo.webp', '/textures/gallery/tailwindlogo.webp', '/textures/gallery/htmllogo.webp', '/textures/gallery/netlifylogo.webp']
-    },
-    {
-        id: 'bio',
-        title: 'SUBHSANDESH',
+        id: 'resume-builder',
+        title: 'AI RESUME',
         front: '/textures/gallery/bioprzod.webp',
         painted: '/textures/gallery/bioprzod_painted.webp',
-        url: 'https://subhsandesh.in',
-        description: 'Founder & Solo Engineer. Built and scaled a digital celebration platform serving 500+ users across India with 99.9% uptime. Owned full-stack development, SEO, product strategy, and growth.',
+        url: 'https://www.hirequotient.com',
+        description: 'One of the highest-traffic products at HireQuotient — an AI resume builder on React, Next.js and OpenAI APIs. Part of a catalogue of 60+ AI-powered apps I built and maintained over a period when organic traffic grew from 40K to 800K monthly visits.',
         techStack: ['/textures/gallery/htmllogo.webp', '/textures/gallery/csslogo.webp', '/textures/gallery/jslogo.webp', '/textures/gallery/netlifylogo.webp']
     },
 ];
@@ -1159,7 +1159,7 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                         position={[0, 0, 0.01]}
                         fontSize={0.11}
                         color={btnHovered ? "#333333" : "#1c1c1c"}
-                        font="/fonts/SpaceGrotesk.ttf"
+                        font="/fonts/CabinSketch-Bold.ttf"
                         anchorX="center"
                         anchorY="middle"
                         fillOpacity={0} // Start hidden
@@ -1205,7 +1205,7 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                         position={[0, 0.28, 0.01]} // Względem środka detailsGroupRef, wyżej
                         fontSize={0.10}
                         color="#1c1c1c"
-                        font="/fonts/SpaceGrotesk.ttf"
+                        font="/fonts/CabinSketch-Bold.ttf"
                         anchorX="center"
                         anchorY="middle"
                         fillOpacity={0} // Start hidden
@@ -1218,7 +1218,7 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                         position={[0, 0.2, 0.01]} // Poniżej nagłówka
                         fontSize={0.06}
                         color="#333333"
-                        font="/fonts/SpaceGrotesk.ttf"
+                        font="/fonts/CabinSketch-Bold.ttf"
                         anchorX="center"
                         anchorY="top"
                         maxWidth={1.1} // Maksymalna szerokość zanim zacznie łamać linie
@@ -1241,7 +1241,7 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                         position={[0, 0.15, 0.01]}
                         fontSize={0.08}
                         color="#1c1c1c"
-                        font="/fonts/SpaceGrotesk.ttf"
+                        font="/fonts/CabinSketch-Bold.ttf"
                         anchorX="center"
                         anchorY="middle"
                         fillOpacity={0} // Start hidden
@@ -1282,7 +1282,7 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                     position={[0, 0.7, 0]} // Tylko dwa pierwsze parametry [X, Y] mają tutaj znaczenie
                     fontSize={0.20}
                     color="#1c1c1c"
-                    font="/fonts/SpaceGrotesk.ttf"
+                    font="/fonts/CabinSketch-Bold.ttf"
                     anchorX="center"
                     anchorY="middle"
                     fillOpacity={0} // Start hidden

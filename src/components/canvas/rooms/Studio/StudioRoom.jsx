@@ -591,8 +591,9 @@ const MonitorBlock = memo(({ item, meshRef, isSelected, onMonitorClick, disabled
     const matRef5 = useRef(); // -Z back
     const matRefs = [matRef0, matRef1, matRef2, matRef3, matRef4, matRef5];
 
-    // Screen shape is driven by the platform's config rather than hard-coded
-    // per platform name, so adding a project group doesn't mean editing here.
+    // Check platform types
+    // Screen shape comes from the platform's config, so adding a project group
+    // does not mean editing this file.
     const shape = PLATFORM_CONFIG[item.platform]?.shape ?? 'monitor';
     const isBlogMonitor = shape === 'monitor';
     const isTvMonitor = shape === 'tv';

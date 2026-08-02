@@ -25,10 +25,10 @@ export const AUDIO_SETTINGS = {
 // Story sections - positions define where each milestone appears
 // Using CHUNK_LENGTH to create looping story (every ~40 units restarts)
 const STORY_MILESTONES = [
-    { id: 'intro', position: [0, 0, -15], type: 'intro', title: 'ITOM', subtitle: '< creative developer />' },
-    { id: 'work', position: [0, 0, -55], type: 'work', title: 'WORK EXPERIENCE', subtitle: 'HireQuotient • SubhSandesh • DrawFlow' },
-    { id: 'journey', position: [0, 0, -95], type: 'journey', title: 'JOURNEY', subtitle: 'Computer Science @ University of Opole' },
-    { id: 'skills', position: [0, 0, -135], type: 'skills', title: 'SKILLS', subtitle: 'React • Three.js • GSAP • Creative Code' },
+    { id: 'intro', position: [0, 0, -15], type: 'intro', title: 'PRABHAV', subtitle: '< frontend & AI engineer />' },
+    { id: 'work', position: [0, 0, -55], type: 'work', title: 'WORK EXPERIENCE', subtitle: 'RankShoot • Cadence Pro • HireQuotient' },
+    { id: 'journey', position: [0, 0, -95], type: 'journey', title: 'JOURNEY', subtitle: 'Mechanical & Mechatronics @ LNMIIT' },
+    { id: 'skills', position: [0, 0, -135], type: 'skills', title: 'SKILLS', subtitle: 'React • Next.js • TypeScript • LangGraph' },
 ];
 
 const AboutRoom = ({ showRoom, onReady, isExiting, isWarmup }) => {

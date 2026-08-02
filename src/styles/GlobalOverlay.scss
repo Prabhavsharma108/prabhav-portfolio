@@ -1,10 +1,32 @@
-// GlobalOverlay — project / detail panels
-//
-// Font faces live in _base.scss; declaring them again here would download the
-// same files under a second family name.
+// GlobalOverlay Styles - Torn Paper Aesthetic
 
-@use 'variables' as *;
-@use 'mixins' as *;
+@font-face {
+    font-family: 'Cabin Sketch';
+    src: url('/fonts/CabinSketch-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cabin Sketch';
+    src: url('/fonts/CabinSketch-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fredericka the Great';
+    src: url('/fonts/FrederickatheGreat-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Rubik Scribble';
+    src: url('/fonts/RubikScribble-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
 
 .studio-paper-card {
     position: relative;

@@ -1072,7 +1072,7 @@ const DoorSection = ({
                         {label === 'THE GALLERY' && (
                             <group position={[0, 0, 0.01]}>
                                 <Text
-                                    font="/fonts/SpaceGrotesk.ttf"
+                                    font="/fonts/CabinSketch-Bold.ttf"
                                     fontSize={0.25}
                                     color="#111111"
                                     anchorX="center"
@@ -1082,7 +1082,7 @@ const DoorSection = ({
                                     THE
                                 </Text>
                                 <Text
-                                    font="/fonts/SpaceGrotesk.ttf"
+                                    font="/fonts/CabinSketch-Bold.ttf"
                                     fontSize={0.25}
                                     color="#111111"
                                     anchorX="center"
@@ -1096,7 +1096,7 @@ const DoorSection = ({
                         {label === 'THE STUDIO' && (
                             <group position={[0, 0, 0.01]}>
                                 <Text
-                                    font="/fonts/SpaceGrotesk.ttf"
+                                    font="/fonts/CabinSketch-Bold.ttf"
                                     fontSize={0.25}
                                     color="#111111"
                                     anchorX="center"
@@ -1106,7 +1106,7 @@ const DoorSection = ({
                                     THE
                                 </Text>
                                 <Text
-                                    font="/fonts/SpaceGrotesk.ttf"
+                                    font="/fonts/CabinSketch-Bold.ttf"
                                     fontSize={0.25}
                                     color="#111111"
                                     anchorX="center"
@@ -1119,7 +1119,7 @@ const DoorSection = ({
                         )}
                         {label === 'THE ABOUT' && (
                             <Text
-                                font="/fonts/SpaceGrotesk.ttf"
+                                font="/fonts/CabinSketch-Bold.ttf"
                                 fontSize={0.30}
                                 color="#111111"
                                 anchorX="center"
@@ -1131,7 +1131,7 @@ const DoorSection = ({
                         )}
                         {label === "LET'S CONNECT" && (
                             <Text
-                                font="/fonts/SpaceGrotesk.ttf"
+                                font="/fonts/CabinSketch-Bold.ttf"
                                 fontSize={0.25}
                                 color="#111111"
                                 anchorX="center"
