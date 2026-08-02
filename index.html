@@ -6,27 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/favico.png" />
   <link rel="apple-touch-icon" href="/favico.png" />
-  <meta name="theme-color" content="#08131f" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#fafafa" />
+  <meta name="color-scheme" content="light" />
 
-  <!-- SEO -->
+  <!-- The first paint is the paper preloader, so the texture behind it is on
+       the critical path. -->
+  <link rel="preload" as="image" href="/textures/paper-texture.webp" type="image/webp" fetchpriority="high">
+
+  <!-- SEO. Absolute URLs are substituted at build time from SITE_URL in
+       vite.config.js so they can never drift from robots.txt / sitemap.xml. -->
   <title>Prabhav Sharma | Frontend &amp; AI Engineer</title>
   <meta name="description"
-    content="Interactive 3D portfolio of Prabhav Sharma — frontend and AI engineer building React, Next.js and LLM-agent products. Founder of RankShoot, an AI SEO automation platform." />
+    content="Interactive 3D portfolio of Prabhav Sharma — frontend and AI engineer building React, Next.js and LLM-agent products. Founder of Project Rankup, an AI SEO automation platform." />
   <meta name="author" content="Prabhav Sharma" />
   <meta name="keywords"
-    content="Prabhav Sharma, Frontend Engineer, AI Engineer, React Developer, Next.js, TypeScript, LangChain, LangGraph, Multi-agent Systems, RankShoot, Jaipur, Rajasthan, India" />
+    content="Prabhav Sharma, Frontend Engineer, AI Engineer, React Developer, Next.js, TypeScript, LangChain, LangGraph, Multi-agent Systems, Project Rankup, Jaipur, Rajasthan, India" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://prabhav-portfolio.vercel.app/" />
+  <link rel="canonical" href="%SITE_URL%/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Prabhav Sharma | Frontend &amp; AI Engineer" />
   <meta property="og:description"
-    content="A portfolio drawn as an engineering blueprint. React, Next.js and LLM-agent work — including RankShoot, an AI SEO automation platform." />
-  <meta property="og:url" content="https://prabhav-portfolio.vercel.app/" />
+    content="A hand-drawn 3D world you walk through. React, Next.js and LLM-agent work — including Project Rankup, an AI SEO automation platform." />
+  <meta property="og:url" content="%SITE_URL%/" />
   <meta property="og:site_name" content="Prabhav Sharma" />
-  <meta property="og:image" content="https://prabhav-portfolio.vercel.app/og-image.webp" />
+  <meta property="og:image" content="%SITE_URL%/og-image.webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_US" />
@@ -35,14 +40,15 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Prabhav Sharma | Frontend &amp; AI Engineer" />
   <meta name="twitter:description"
-    content="A portfolio drawn as an engineering blueprint. React, Next.js and LLM-agent work, including RankShoot." />
-  <meta name="twitter:image" content="https://prabhav-portfolio.vercel.app/og-image.webp" />
+    content="A hand-drawn 3D world you walk through. React, Next.js and LLM-agent work, including Project Rankup." />
+  <meta name="twitter:image" content="%SITE_URL%/og-image.webp" />
 
-  <!-- Fonts are self-hosted (see src/styles/_base.scss), so there is no
-       third-party stylesheet on the critical path. Preloading the two faces
-       used above the fold lets the title block paint without a swap. -->
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/SpaceGrotesk.woff2" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/JetBrainsMono.woff2" crossorigin>
+  <!-- Hand-drawn display faces used by the interface. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Gloria+Hallelujah&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -51,7 +57,7 @@
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Prabhav Sharma",
-        "url": "https://prabhav-portfolio.vercel.app",
+        "url": "%SITE_URL%",
         "email": "prabhavsharma109@gmail.com",
         "jobTitle": "Frontend & AI Engineer",
         "address": {
@@ -61,7 +67,8 @@
         },
         "worksFor": {
           "@type": "Organization",
-          "name": "RankShoot",
+          "name": "Project Rankup",
+          "url": "https://projectrankup.com",
           "address": "Jaipur, Rajasthan, India"
         },
         "alumniOf": {
@@ -78,9 +85,9 @@
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "url": "https://prabhav-portfolio.vercel.app",
+        "url": "%SITE_URL%",
         "name": "Prabhav Sharma — Portfolio",
-        "description": "Interactive 3D portfolio drawn as an engineering blueprint."
+        "description": "Interactive hand-drawn 3D portfolio."
       }
     ]
   </script>
@@ -107,8 +114,8 @@
   <div id="seo-content" class="sr-only-seo">
     <header>
       <h1>Prabhav Sharma — Frontend &amp; AI Engineer</h1>
-      <p>An interactive WebGL portfolio drawn as an engineering blueprint, covering frontend architecture, LLM agent
-        systems and product engineering.</p>
+      <p>An interactive, hand-drawn WebGL portfolio covering frontend architecture, LLM agent systems and product
+        engineering.</p>
     </header>
 
     <nav aria-label="Main Navigation">
@@ -132,21 +139,20 @@
           </p>
           <p>
             I studied Mechanical &amp; Mechatronics Engineering at The LNM Institute of Information Technology
-            (2020–2024) and moved into software from there. This site is drawn as an engineering blueprint partly
-            for that reason: it is still how I think about systems.
+            (2020–2024) and moved into software from there.
           </p>
         </section>
 
         <section>
           <h2>Experience</h2>
 
-          <h3>Founder &amp; Product Engineer — RankShoot (March 2026 – Present)</h3>
+          <h3>Founder &amp; Product Engineer — Project Rankup (March 2026 – Present)</h3>
           <p>
-            RankShoot is an AI SEO automation platform built with Next.js, React, Node.js, PostgreSQL and LLM APIs,
-            automating keyword research, content generation and publishing. I built agent-based content pipelines
-            that produce blogs, metadata, FAQs and internal links, cutting manual content production effort by over
-            80%, and designed and deployed the full product architecture — authentication, analytics, billing and
-            cloud infrastructure — now serving several beta customers.
+            Project Rankup is an AI SEO automation platform built with Next.js, React, Node.js, PostgreSQL and LLM
+            APIs, automating keyword research, content generation and publishing. I built agent-based content
+            pipelines that produce blogs, metadata, FAQs and internal links, cutting manual content production effort
+            by over 80%, and designed and deployed the full product architecture — authentication, analytics, billing
+            and cloud infrastructure — now serving several beta customers.
           </p>
 
           <h3>Software Engineer — Cadence Pro Inc. (March 2025 – May 2026)</h3>

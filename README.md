@@ -5,7 +5,7 @@ corridor and open doors into rooms for about, work, projects and contact.
 
 Built with React 19, React Three Fiber, three.js and GSAP on Vite.
 
-**Live:** https://prabhav-portfolio.vercel.app
+**Live:** https://prabhavsharma.vercel.app
 
 ---
 
@@ -80,6 +80,13 @@ Deployed on Vercel. `vercel.json` sets the security headers and caching policy â
 fingerprinted assets are immutable for a year, `index.html` always revalidates
 so a deploy actually reaches people.
 
+### Changing the domain
+
+The public origin lives in exactly one place: `SITE_URL` in `vite.config.js`.
+A build plugin substitutes it into the canonical link, Open Graph and Twitter
+tags and the JSON-LD, and generates `robots.txt` and `sitemap.xml` from the same
+value â€” so they cannot drift apart. Override it without touching code by setting
+a `SITE_URL` environment variable on the deployment.
 
 ## License
 

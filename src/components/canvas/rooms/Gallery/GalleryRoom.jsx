@@ -35,11 +35,11 @@ export const GALLERY_INTERACTION_AUDIO_SETTINGS = {
 // Define the unique projects and their textures
 const UNIQUE_PROJECTS = [
     {
-        id: 'rankshoot',
-        title: 'RANKSHOOT',
+        id: 'rankup',
+        title: 'PROJECT RANKUP',
         front: '/textures/gallery/monetuneprzod.webp',
         painted: '/textures/gallery/monetuneprzod_painted.webp',
-        url: 'https://rankshoot.com',
+        url: 'https://projectrankup.com',
         description: 'Founder & Product Engineer. An AI SEO automation platform built end to end on Next.js, React, Node.js, PostgreSQL and LLM APIs. Agent-based pipelines draft blogs, metadata, FAQs and internal links, cutting manual content production effort by over 80%. I designed and deployed the whole system — auth, analytics, billing and cloud infrastructure — now serving multiple beta customers.',
         techStack: ['/textures/gallery/reactlogo.webp', '/textures/gallery/jslogo.webp', '/textures/gallery/tailwindlogo.webp', '/textures/gallery/netlifylogo.webp']
     },

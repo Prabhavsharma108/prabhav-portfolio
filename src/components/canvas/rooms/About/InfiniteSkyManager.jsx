@@ -351,7 +351,7 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 anchorY="middle"
                 font="/fonts/RubikScribble-Regular.ttf"
             >
-                SUYASH AGRAHARI
+                PRABHAV SHARMA
             </Text>
 
             {/* Subtitle - Brand (spreads right) */}
@@ -364,7 +364,7 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 anchorY="middle"
                 font="/fonts/CabinSketch-Regular.ttf"
             >
-                (SOFTWARE ENGINEER AT HIREQUOTIENT)
+                (FOUNDER AT PROJECT RANKUP)
             </Text>
 
             {/* Avatar on cloud - floating + spreads up-left */}
@@ -403,7 +403,7 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 font="/fonts/CabinSketch-Regular.ttf"
                 fontStyle="italic"
             >
-                across frontend, backend & AWS"
+                across frontend, agents & infra"
             </Text>
         </group>
     );
@@ -417,10 +417,10 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
  * until there are assets worth showing.
  */
 const WORK_EXPERIENCE_DATA = {
-    rankshoot: {
-        id: 'work-rankshoot',
+    rankup: {
+        id: 'work-rankup',
         layout: 'work_experience',
-        title: 'RankShoot',
+        title: 'Project Rankup',
         subtitle: 'FOUNDER & PRODUCT ENGINEER',
         period: 'Mar 2026 – Present',
         location: 'Jaipur, India',
@@ -490,7 +490,7 @@ const WORK_EXPERIENCE_DATA = {
 
 /**
  * WORK EXPERIENCE Milestone - Floating Cards
- * HireQuotient (center), RankShoot, Cadence Pro
+ * HireQuotient (center), Project Rankup, Cadence Pro
  */
 const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
     const { camera, viewport } = useThree();
@@ -669,7 +669,7 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                 <AwardButton
                     onClick={(e) => {
                         e.stopPropagation();
-                        openOverlay(WORK_EXPERIENCE_DATA.rankshoot);
+                        openOverlay(WORK_EXPERIENCE_DATA.rankup);
                     }}
                     texture={buttonTexture}
                     paintedTexture={buttonPaintedTexture}
@@ -679,15 +679,19 @@ const WorkExperienceMilestone = ({ z, scrollProgressRef }) => {
                     onHoverChange={makeCardHoverHandler(subhsandeshCardRevealRef, subhsandeshCardPaintedRef, subhsandeshHideDelayRef)}
                 />
                 {/* COMPANY NAME */}
+                {/* Slightly smaller than the other two cards and width-capped:
+                    "Project Rankup" is the longest name here and would otherwise
+                    run past the card edge. */}
                 <Text
                     position={[0, 0.7, 0.01]}
-                    fontSize={0.35}
+                    fontSize={0.29}
+                    maxWidth={2.4}
                     color="#FF6B6B"
                     anchorX="center"
                     anchorY="middle"
                     font="/fonts/CabinSketch-Bold.ttf"
                 >
-                    RankShoot
+                    Project Rankup
                 </Text>
                 {/* ROLE */}
                 <Text
@@ -980,7 +984,7 @@ const JourneyMilestone = ({ z, scrollProgressRef }) => {
                     anchorY="middle"
                     font="/fonts/CabinSketch-Bold.ttf"
                 >
-                    2022-NOW
+                    2024-NOW
                 </Text>
             </group>
         </group>

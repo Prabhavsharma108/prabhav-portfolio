@@ -7,17 +7,17 @@
  * shop where the interesting problem was throughput.
  */
 
-// TODO(prabhav): confirm these before launch — RankShoot in particular.
+// TODO(prabhav): confirm these before launch — Project Rankup in particular.
 // Cadence Pro work is internal, so those entries deliberately carry no link.
-const RANKSHOOT_URL = 'https://rankshoot.com';
+const RANKUP_URL = 'https://projectrankup.com';
 const HIREQUOTIENT_URL = 'https://www.hirequotient.com';
 
 export const PLATFORM_CONFIG = {
-    rankshoot: {
+    rankup: {
         color: '#35c8f5',
         accentColor: '#7fd2f2',
         icon: '◆',
-        label: 'RankShoot',
+        label: 'Project Rankup',
         shape: 'monitor',
     },
     cadencepro: {
@@ -37,42 +37,42 @@ export const PLATFORM_CONFIG = {
 };
 
 const RAW_CONTENT_DATA = [
-    // ===================== RANKSHOOT =====================
+    // ===================== PROJECT RANKUP =====================
     // Founder & Product Engineer, Mar 2026 – present.
     {
         id: 'rs-001',
-        platform: 'rankshoot',
+        platform: 'rankup',
         title: 'AI SEO Automation Platform',
         description:
-            'Founded and built RankShoot end to end — Next.js, React, Node.js, PostgreSQL and LLM APIs — automating keyword research, content generation and publishing as a single pipeline.',
-        url: RANKSHOOT_URL,
+            'Founded and built Project Rankup end to end — Next.js, React, Node.js, PostgreSQL and LLM APIs — automating keyword research, content generation and publishing as a single pipeline.',
+        url: RANKUP_URL,
         date: '2026-03-01',
     },
     {
         id: 'rs-002',
-        platform: 'rankshoot',
+        platform: 'rankup',
         title: 'Agent-based Content Pipelines',
         description:
             'Multi-step agents that draft blogs, metadata, FAQs and internal links, then hand off for review. Cut manual content production effort by more than 80%.',
-        url: RANKSHOOT_URL,
+        url: RANKUP_URL,
         date: '2026-04-01',
     },
     {
         id: 'rs-003',
-        platform: 'rankshoot',
+        platform: 'rankup',
         title: 'Product Architecture & Infrastructure',
         description:
             'Designed and deployed the whole system — authentication, analytics, billing and cloud infrastructure — now running for several beta customers.',
-        url: RANKSHOOT_URL,
+        url: RANKUP_URL,
         date: '2026-05-01',
     },
     {
         id: 'rs-004',
-        platform: 'rankshoot',
+        platform: 'rankup',
         title: 'Keyword Research Engine',
         description:
             'Clusters search intent and maps it onto a publishing calendar, so generated content ladders up to a strategy instead of being one-off posts.',
-        url: RANKSHOOT_URL,
+        url: RANKUP_URL,
         date: '2026-06-01',
     },
 
@@ -158,7 +158,7 @@ const RAW_CONTENT_DATA = [
 // Screen faces are handed out round-robin per platform so neighbouring screens
 // in the tower don't repeat the same image.
 const SCREEN_TEXTURES = {
-    rankshoot: ['/textures/studio/monitorfront_postnafbdoublewinner.webp'],
+    rankup: ['/textures/studio/monitorfront_postnafbdoublewinner.webp'],
     cadencepro: [
         '/textures/studio/tvfront_filmikprojektdlamultiego.webp',
         '/textures/studio/tvfront_filmikedytowaniezdjec.webp',
@@ -168,7 +168,7 @@ const SCREEN_TEXTURES = {
 
 const paintedOf = (path) => path.replace('.webp', '_painted.webp');
 
-const cursors = { rankshoot: 0, cadencepro: 0, hirequotient: 0 };
+const cursors = { rankup: 0, cadencepro: 0, hirequotient: 0 };
 
 export const CONTENT_DATA = RAW_CONTENT_DATA.map((item) => {
     const pool = SCREEN_TEXTURES[item.platform];
