@@ -80,11 +80,6 @@ Deployed on Vercel. `vercel.json` sets the security headers and caching policy â
 fingerprinted assets are immutable for a year, `index.html` always revalidates
 so a deploy actually reaches people.
 
-## Credits
-
-The corridor concept and several room mechanics began from a portfolio by
-[Suyash Agrahari](https://github.com/suyashagrahari/suyash-portfolio-v2), used
-and reworked with his permission.
 
 ## License
 
