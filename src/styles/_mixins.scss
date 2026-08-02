@@ -1,0 +1,164 @@
+// =============================================================================
+// SASS MIXINS — Prabhav Sharma / Blueprint
+// =============================================================================
+
+@use 'variables' as *;
+
+// Responsive breakpoints
+@mixin mobile {
+    @media (max-width: #{$breakpoint-tablet - 1px}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: $breakpoint-tablet) and (max-width: #{$breakpoint-desktop - 1px}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: $breakpoint-desktop) {
+        @content;
+    }
+}
+
+@mixin wide {
+    @media (min-width: $breakpoint-wide) {
+        @content;
+    }
+}
+
+// Flexbox shortcuts
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-column-center {
+    @include flex-column;
+    align-items: center;
+    justify-content: center;
+}
+
+// Full screen overlay
+@mixin fullscreen {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+// Hide scrollbar
+@mixin hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+// Smooth text rendering
+@mixin smooth-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+// =============================================================================
+// BLUEPRINT LANGUAGE
+// The mixins below are the shared vocabulary of the drafting-sheet look.
+// Anything that needs to feel "on the blueprint" should reach for these
+// rather than hand-rolling borders and colours.
+// =============================================================================
+
+// Two-density drafting grid. Minor lines at $grid-cell, major every 5th.
+// Rendered as gradients rather than an image so it costs no request and
+// stays crisp at any DPR.
+@mixin blueprint-grid($cell: $grid-cell, $minor: $bp-grid-minor, $major: $bp-grid-major) {
+    background-image:
+        linear-gradient($major 1px, transparent 1px),
+        linear-gradient(90deg, $major 1px, transparent 1px),
+        linear-gradient($minor 1px, transparent 1px),
+        linear-gradient(90deg, $minor 1px, transparent 1px);
+    background-size:
+        #{$cell * 5} #{$cell * 5},
+        #{$cell * 5} #{$cell * 5},
+        #{$cell} #{$cell},
+        #{$cell} #{$cell};
+}
+
+// The standard blueprint label: small, uppercase, widely tracked mono.
+// Used for every annotation, axis label and section marker on the site.
+@mixin bp-label($size: 0.68rem, $color: $bp-text-dim) {
+    font-family: $font-mono;
+    font-size: $size;
+    font-weight: 500;
+    letter-spacing: $track-label;
+    text-transform: uppercase;
+    color: $color;
+}
+
+// A panel that reads as a box drawn on the sheet.
+@mixin bp-panel($bg: rgba(12, 30, 48, 0.92)) {
+    background: $bg;
+    border: 1px solid $bp-rule;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+// Drafting corner ticks — the small right-angle marks at a panel's corners.
+// Purely decorative, drawn with two pseudo-elements so no extra DOM is needed.
+@mixin bp-corner-ticks($len: 9px, $color: $bp-cyan, $inset: -1px) {
+    position: relative;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        width: $len;
+        height: $len;
+        pointer-events: none;
+    }
+
+    &::before {
+        top: $inset;
+        left: $inset;
+        border-top: 1px solid $color;
+        border-left: 1px solid $color;
+    }
+
+    &::after {
+        bottom: $inset;
+        right: $inset;
+        border-bottom: 1px solid $color;
+        border-right: 1px solid $color;
+    }
+}
+
+// Soft emission for active/hover states. Kept subtle — a blueprint glows
+// like backlit film, not like neon.
+@mixin bp-glow($color: $bp-cyan, $strength: 0.4) {
+    box-shadow:
+        0 0 0 1px rgba($color, 0.5),
+        0 0 18px rgba($color, $strength);
+}
+
+@mixin bp-text-glow($color: $bp-cyan) {
+    text-shadow: 0 0 12px rgba($color, 0.55);
+}
+
+// Respect the OS "reduce motion" setting. Every animated component should
+// wrap its non-essential motion in this.
+@mixin reduced-motion {
+    @media (prefers-reduced-motion: reduce) {
+        @content;
+    }
+}

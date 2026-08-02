@@ -1,0 +1,232 @@
+// =============================================================================
+// BASE STYLES — Prabhav Sharma / Blueprint
+// =============================================================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// -----------------------------------------------------------------------------
+// FONTS
+// Self-hosted, latin subset, variable weight — one file per family serves every
+// weight we use. `swap` so text paints immediately on the drafting sheet rather
+// than blocking the first frame of the 3D scene.
+// -----------------------------------------------------------------------------
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/JetBrainsMono.woff2') format('woff2-variations');
+    font-weight: 100 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Space Grotesk';
+    src: url('/fonts/SpaceGrotesk.woff2') format('woff2-variations');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+// -----------------------------------------------------------------------------
+// RESET
+// -----------------------------------------------------------------------------
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+
+    @include mobile {
+        font-size: 14px;
+    }
+}
+
+body {
+    font-family: $font-body;
+    background-color: $bp-ink;
+    color: $bp-text;
+    overflow: hidden; // the 3D scene owns scrolling
+    @include smooth-text;
+    @include hide-scrollbar;
+}
+
+// Text selection reads as a highlighter on the sheet.
+::selection {
+    background: $bp-cyan-soft;
+    color: $bp-text;
+}
+
+// -----------------------------------------------------------------------------
+// LAYOUT SHELL
+// -----------------------------------------------------------------------------
+.app {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    position: relative;
+    overflow: hidden;
+}
+
+.canvas-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: $z-canvas;
+}
+
+.ui-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: $z-ui;
+}
+
+// -----------------------------------------------------------------------------
+// SCROLL HINT
+// Styled as a dimension line: a tracked label above a descending leader.
+// -----------------------------------------------------------------------------
+.scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    animation: bp-fade-in 1s $ease-draft 0.5s both;
+
+    &__text {
+        @include bp-label(0.66rem, $bp-text-mid);
+    }
+
+    // The leader line itself — a 1px rule that pulses downward, standing in
+    // for the old bouncing arrow.
+    &__arrow {
+        width: 1px;
+        height: 34px;
+        background: linear-gradient(to bottom, $bp-cyan, transparent);
+        animation: bp-leader 2.2s $ease-draft infinite;
+
+        @include reduced-motion {
+            animation: none;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// INSTRUCTIONS CHIP
+// -----------------------------------------------------------------------------
+.instructions {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+
+    p {
+        @include bp-label(0.64rem, $bp-text-mid);
+        @include bp-panel;
+        padding: 0.45rem 0.85rem;
+    }
+
+    @include mobile {
+        bottom: auto;
+        top: 1rem;
+        right: 1rem;
+
+        p {
+            font-size: 0.58rem;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ANIMATIONS
+// -----------------------------------------------------------------------------
+@keyframes bp-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+// A leader line being drawn downward and released.
+@keyframes bp-leader {
+    0% {
+        transform: scaleY(0);
+        transform-origin: top;
+        opacity: 0;
+    }
+
+    35% {
+        transform: scaleY(1);
+        transform-origin: top;
+        opacity: 1;
+    }
+
+    70% {
+        transform: scaleY(1);
+        transform-origin: bottom;
+        opacity: 1;
+    }
+
+    100% {
+        transform: scaleY(0);
+        transform-origin: bottom;
+        opacity: 0;
+    }
+}
+
+// Kept for components that still reference the old names.
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ELEMENT RESETS
+// -----------------------------------------------------------------------------
+.ui-overlay,
+.scroll-hint,
+.instructions {
+    user-select: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+}
+
+// Keyboard focus must stay visible — the 3D scene is otherwise very easy to
+// get lost in without a pointer.
+:focus-visible {
+    outline: 1px solid $bp-cyan;
+    outline-offset: 3px;
+}
