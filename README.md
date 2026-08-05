@@ -5,7 +5,7 @@ corridor and open doors into rooms for about, work, projects and contact.
 
 Built with React 19, React Three Fiber, three.js and GSAP on Vite.
 
-**Live:** https://prabhavsharma.vercel.app
+**Live:** https://prabhavsharma.in
 
 ---
 

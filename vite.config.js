@@ -8,7 +8,7 @@ import viteCompression from 'vite-plugin-compression'
 // Twitter tags, JSON-LD, robots.txt and the sitemap — is generated from this,
 // so they can't drift apart when the domain changes. Override it per
 // environment (e.g. a Vercel env var) rather than editing markup.
-const SITE_URL = (process.env.SITE_URL || 'https://prabhavsharma.vercel.app').replace(/\/$/, '')
+const SITE_URL = (process.env.SITE_URL || 'https://prabhavsharma.in').replace(/\/$/, '')
 
 /**
  * Substitutes %SITE_URL% in index.html and emits robots.txt + sitemap.xml
