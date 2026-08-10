@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import viteCompression from 'vite-plugin-compression'
@@ -41,6 +42,12 @@ const siteUrlPlugin = () => ({
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>${SITE_URL}/experience</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
 `,
     })
@@ -64,6 +71,13 @@ export default defineConfig({
     sourcemap: false,
     reportCompressedSize: false,
     rollupOptions: {
+      // Two entry points. index.html is the static landing page and ships no
+      // JavaScript at all; experience/index.html is the 3D app. Splitting them
+      // this way means visitors (and crawlers) hitting / never download three.js.
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        experience: resolve(__dirname, 'experience/index.html'),
+      },
       output: {
         // Without this everything lands in one ~1.4MB chunk. three.js never
         // changes between deploys, so splitting it out means a content edit

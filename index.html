@@ -7,28 +7,18 @@
   <link rel="icon" type="image/png" href="/favico.png" />
   <link rel="apple-touch-icon" href="/favico.png" />
   <meta name="theme-color" content="#fafafa" />
-  <meta name="color-scheme" content="light" />
 
-  <!-- The first paint is the paper preloader, so the texture behind it is on
-       the critical path. -->
-  <link rel="preload" as="image" href="/textures/paper-texture.webp" type="image/webp" fetchpriority="high">
-
-  <!-- SEO. Absolute URLs are substituted at build time from SITE_URL in
-       vite.config.js so they can never drift from robots.txt / sitemap.xml. -->
-  <title>Prabhav Sharma | Frontend &amp; AI Engineer</title>
+  <title>Prabhav Sharma — Frontend &amp; AI Engineer | React, Next.js &amp; AI Agents (India)</title>
   <meta name="description"
-    content="Interactive 3D portfolio of Prabhav Sharma — frontend and AI engineer building React, Next.js and LLM-agent products. Founder of Project Rankup, an AI SEO automation platform." />
+    content="Prabhav Sharma is a frontend and AI engineer in Jaipur, India, building production React and Next.js applications and LLM agent systems with LangChain and LangGraph. Available for full-time and freelance work, remote worldwide." />
   <meta name="author" content="Prabhav Sharma" />
-  <meta name="keywords"
-    content="Prabhav Sharma, Frontend Engineer, AI Engineer, React Developer, Next.js, TypeScript, LangChain, LangGraph, Multi-agent Systems, Project Rankup, Jaipur, Rajasthan, India" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
   <link rel="canonical" href="%SITE_URL%/" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Prabhav Sharma | Frontend &amp; AI Engineer" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Prabhav Sharma — Frontend &amp; AI Engineer" />
   <meta property="og:description"
-    content="A hand-drawn 3D world you walk through. React, Next.js and LLM-agent work — including Project Rankup, an AI SEO automation platform." />
+    content="Frontend and AI engineer in Jaipur, India. React, Next.js, TypeScript and LLM agent systems. Founder of Project Rankup." />
   <meta property="og:url" content="%SITE_URL%/" />
   <meta property="og:site_name" content="Prabhav Sharma" />
   <meta property="og:image" content="%SITE_URL%/og-image.webp" />
@@ -36,186 +26,420 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_US" />
 
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Prabhav Sharma | Frontend &amp; AI Engineer" />
+  <meta name="twitter:title" content="Prabhav Sharma — Frontend &amp; AI Engineer" />
   <meta name="twitter:description"
-    content="A hand-drawn 3D world you walk through. React, Next.js and LLM-agent work, including Project Rankup." />
+    content="Frontend and AI engineer in Jaipur, India. React, Next.js, TypeScript and LLM agent systems." />
   <meta name="twitter:image" content="%SITE_URL%/og-image.webp" />
 
-  <!-- Hand-drawn display faces used by the interface. -->
+  <!-- Same hand-drawn faces the 3D experience uses, so the two pages read as
+       one site. Preconnected and swap-loaded so text paints immediately. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Gloria+Hallelujah&family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+  <link rel="preload" as="image" href="/textures/paper-texture.webp" type="image/webp">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Gloria+Hallelujah&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Structured Data -->
+  <!-- Styles are inlined deliberately. This page ships no JavaScript, so it
+       renders in a single round trip — fast enough to score well and cheap
+       enough for crawlers and AI agents to fetch and read reliably. -->
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#1a1a1a; --muted:#5a5a5a; --line:#1a1a1a; --faint:#cfcfcf;
+      --bg:#fafafa; --card:rgba(255,255,255,.72);
+      --hand:'Caveat',cursive; --display:'Gloria Hallelujah',cursive;
+      --sans:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      /* Irregular radii read as a pen outline rather than a UI box. */
+      --sketch:255px 12px 225px 15px/15px 225px 15px 255px;
+      --sketch-alt:15px 225px 15px 255px/225px 15px 255px 15px;
+    }
+    html{-webkit-text-size-adjust:100%}
+    body{
+      font-family:var(--sans);color:var(--ink);line-height:1.7;
+      background:var(--bg) url('/textures/paper-texture.webp') repeat;
+      background-size:520px auto;
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
+    a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;
+      text-underline-offset:3px;text-decoration-style:wavy}
+    a:hover{text-decoration-style:solid}
+    :focus-visible{outline:2px dashed var(--ink);outline-offset:3px}
+
+    header{border-bottom:2px solid var(--ink);background:rgba(250,250,250,.85)}
+    .bar{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;padding:1rem 0}
+    .brand{font-family:var(--display);font-size:1.15rem;letter-spacing:.01em}
+    nav ul{display:flex;flex-wrap:wrap;gap:1.2rem;list-style:none}
+    nav a{font-family:var(--hand);font-size:1.15rem;text-decoration:none;color:var(--muted)}
+    nav a:hover{color:var(--ink);text-decoration:underline;text-decoration-style:wavy}
+
+    .hero{padding:4rem 0 3rem}
+    h1{font-family:var(--display);font-size:clamp(1.8rem,4.6vw,2.9rem);line-height:1.3;font-weight:400}
+    .tagline{font-family:var(--hand);font-size:clamp(1.25rem,2.8vw,1.6rem);color:var(--muted);
+      margin-top:1.1rem;max-width:44rem;line-height:1.5}
+    .loc{font-family:var(--hand);font-size:1.1rem;color:var(--muted);margin-top:1rem}
+    .cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+    .btn{display:inline-block;padding:.7rem 1.5rem;font-family:var(--hand);font-size:1.2rem;
+      border:2px solid var(--ink);border-radius:var(--sketch);background:rgba(255,255,255,.6);
+      color:var(--ink);text-decoration:none;transition:transform .15s ease,background .15s ease}
+    .btn:hover{text-decoration:none;background:#fff;transform:translateY(-2px) rotate(-.6deg)}
+    .btn--primary{background:var(--ink);color:#fafafa;border-radius:var(--sketch-alt)}
+    .btn--primary:hover{background:#000;color:#fff}
+
+    section{padding:3rem 0;border-top:2px dashed var(--faint)}
+    h2{font-family:var(--display);font-size:clamp(1.3rem,2.8vw,1.75rem);font-weight:400;margin-bottom:.5rem}
+    .lede{font-family:var(--hand);font-size:1.25rem;color:var(--muted);max-width:46rem;margin-bottom:1.75rem}
+    h3{font-family:var(--display);font-size:1.02rem;font-weight:400;margin-bottom:.3rem;line-height:1.45}
+
+    .grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr))}
+    .card{background:var(--card);border:2px solid var(--ink);border-radius:var(--sketch);padding:1.5rem}
+    .card:nth-child(even){border-radius:var(--sketch-alt)}
+    .card p{color:var(--muted);font-size:.95rem;margin-top:.5rem}
+
+    .role{background:var(--card);border:2px solid var(--ink);border-radius:var(--sketch);
+      padding:1.6rem;margin-bottom:1.1rem}
+    .role:nth-of-type(even){border-radius:var(--sketch-alt)}
+    .role__top{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;align-items:baseline}
+    .role__when{font-family:var(--hand);font-size:1.1rem;color:var(--muted);white-space:nowrap}
+    .role__org{font-family:var(--hand);font-size:1.2rem;margin-bottom:.6rem}
+    .role ul{margin:.5rem 0 0 1.15rem;color:var(--muted);font-size:.95rem}
+    .role li{margin-bottom:.4rem}
+
+    .tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem}
+    .tag{font-family:var(--hand);font-size:1rem;border:1.5px solid var(--ink);
+      padding:.1rem .7rem;border-radius:12px 3px 12px 3px/3px 12px 3px 12px;background:rgba(255,255,255,.5)}
+
+    .skills dt{font-family:var(--display);font-size:.95rem;margin-top:1.15rem}
+    .skills dd{color:var(--muted);font-size:.95rem;margin-left:0}
+
+    details{background:var(--card);border:2px solid var(--ink);border-radius:var(--sketch);
+      padding:1.15rem 1.4rem;margin-bottom:.85rem}
+    details:nth-of-type(even){border-radius:var(--sketch-alt)}
+    summary{font-family:var(--display);font-size:1rem;cursor:pointer;line-height:1.5}
+    details p{color:var(--muted);margin-top:.75rem;font-size:.95rem}
+
+    .banner{background:var(--card);border:2px solid var(--ink);border-radius:var(--sketch);
+      padding:2.25rem;text-align:center}
+    .banner p{font-family:var(--hand);font-size:1.25rem;color:var(--muted);max-width:38rem;margin:.6rem auto 1.5rem}
+
+    footer{border-top:2px solid var(--ink);padding:2.5rem 0;color:var(--muted);
+      background:rgba(250,250,250,.85)}
+    .foot{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;font-family:var(--hand);font-size:1.1rem}
+    .foot ul{display:flex;flex-wrap:wrap;gap:1.15rem;list-style:none}
+
+    @media (prefers-reduced-motion:reduce){.btn:hover{transform:none}}
+  </style>
+
   <script type="application/ld+json">
-    [
+  {
+    "@context":"https://schema.org",
+    "@graph":[
       {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Prabhav Sharma",
-        "url": "%SITE_URL%",
-        "email": "prabhavsharma109@gmail.com",
-        "jobTitle": "Frontend & AI Engineer",
-        "address": {
-          "@type": "PostalAddress",
-          "addressRegion": "Rajasthan",
-          "addressCountry": "IN"
-        },
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Project Rankup",
-          "url": "https://projectrankup.com",
-          "address": "Jaipur, Rajasthan, India"
-        },
-        "alumniOf": {
-          "@type": "EducationalOrganization",
-          "name": "The LNM Institute of Information Technology",
-          "address": "Jaipur, India"
-        },
-        "knowsAbout": ["React.js", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "Redux", "React Query", "LangChain", "LangGraph", "Multi-agent Systems", "Generative AI", "GraphQL", "Node.js", "Frontend Architecture"],
-        "sameAs": [
-          "https://www.linkedin.com/in/prabhav-sharma-8898362228",
-          "https://github.com/Prabhavsharma108"
-        ]
+        "@type":"Person",
+        "@id":"%SITE_URL%/#person",
+        "name":"Prabhav Sharma",
+        "url":"%SITE_URL%/",
+        "image":"%SITE_URL%/og-image.webp",
+        "email":"prabhavsharma109@gmail.com",
+        "jobTitle":"Frontend & AI Engineer",
+        "description":"Frontend and AI engineer building production React and Next.js applications and LLM agent systems with LangChain and LangGraph.",
+        "address":{"@type":"PostalAddress","addressLocality":"Jaipur","addressRegion":"Rajasthan","addressCountry":"IN"},
+        "worksFor":{"@type":"Organization","name":"Project Rankup","url":"https://projectrankup.com"},
+        "alumniOf":{"@type":"EducationalOrganization","name":"The LNM Institute of Information Technology","address":"Jaipur, India"},
+        "knowsAbout":["Frontend Development","React.js","Next.js","TypeScript","JavaScript","Tailwind CSS","Redux","React Query","Node.js","GraphQL","REST APIs","LangChain","LangGraph","AI Agents","Multi-agent Systems","Generative AI","Retrieval Augmented Generation","Three.js","React Three Fiber","WebGL","Web Performance","Technical SEO"],
+        "sameAs":["https://www.linkedin.com/in/prabhav-sharma-8898362228","https://github.com/Prabhavsharma108"]
       },
       {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "url": "%SITE_URL%",
-        "name": "Prabhav Sharma — Portfolio",
-        "description": "Interactive hand-drawn 3D portfolio."
+        "@type":"ProfilePage",
+        "@id":"%SITE_URL%/#webpage",
+        "url":"%SITE_URL%/",
+        "name":"Prabhav Sharma — Frontend & AI Engineer",
+        "about":{"@id":"%SITE_URL%/#person"},
+        "inLanguage":"en"
+      },
+      {
+        "@type":"WebSite",
+        "@id":"%SITE_URL%/#website",
+        "url":"%SITE_URL%/",
+        "name":"Prabhav Sharma",
+        "publisher":{"@id":"%SITE_URL%/#person"},
+        "inLanguage":"en"
+      },
+      {
+        "@type":"FAQPage",
+        "@id":"%SITE_URL%/#faq",
+        "mainEntity":[
+          {"@type":"Question","name":"Who is Prabhav Sharma?","acceptedAnswer":{"@type":"Answer","text":"Prabhav Sharma is a frontend and AI engineer based in Jaipur, Rajasthan, India. He builds production web applications with React, Next.js and TypeScript, and LLM agent systems using LangChain and LangGraph. He is the founder of Project Rankup, an AI SEO automation platform, and previously worked at Cadence Pro and HireQuotient."}},
+          {"@type":"Question","name":"Is Prabhav Sharma available to hire as a freelance developer?","acceptedAnswer":{"@type":"Answer","text":"Yes. Prabhav Sharma is available for freelance, contract and full-time frontend and AI engineering work. He works remotely with clients worldwide and is based in Jaipur, India. Contact him at prabhavsharma109@gmail.com."}},
+          {"@type":"Question","name":"What technologies does Prabhav Sharma work with?","acceptedAnswer":{"@type":"Answer","text":"React.js, Next.js, TypeScript and JavaScript on the frontend, with Tailwind CSS, Redux, Zustand and React Query. Node.js, REST and GraphQL on the backend. For AI work he uses LangChain, LangGraph, multi-agent systems and generative AI APIs. He also builds 3D and WebGL interfaces with Three.js and React Three Fiber."}},
+          {"@type":"Question","name":"Does Prabhav Sharma work with international clients remotely?","acceptedAnswer":{"@type":"Answer","text":"Yes. He works remotely with companies and founders worldwide, including the US, Europe and India, and has prior remote experience delivering production applications for distributed teams."}},
+          {"@type":"Question","name":"What is Project Rankup?","acceptedAnswer":{"@type":"Answer","text":"Project Rankup is an AI SEO automation platform founded and built by Prabhav Sharma. It automates keyword research, content generation and publishing using agent-based pipelines built on Next.js, React, Node.js, PostgreSQL and LLM APIs, cutting manual content production effort by over 80%."}},
+          {"@type":"Question","name":"Can Prabhav Sharma build 3D or WebGL websites?","acceptedAnswer":{"@type":"Answer","text":"Yes. He builds interactive 3D web experiences using Three.js and React Three Fiber. His own portfolio is a fully interactive 3D world with an infinite corridor, custom shaders and scroll-driven camera work."}}
+        ]
       }
     ]
+  }
   </script>
-
-  <style>
-    /* The crawler-facing copy below is a genuine text equivalent of the 3D
-       scene, not keyword padding — WebGL content is otherwise invisible to
-       indexers and to anyone browsing without hardware acceleration. */
-    .sr-only-seo {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
-    }
-  </style>
 </head>
 
 <body>
-  <div id="seo-content" class="sr-only-seo">
-    <header>
-      <h1>Prabhav Sharma — Frontend &amp; AI Engineer</h1>
-      <p>An interactive, hand-drawn WebGL portfolio covering frontend architecture, LLM agent systems and product
-        engineering.</p>
-    </header>
+  <header>
+    <div class="wrap bar">
+      <span class="brand">Prabhav Sharma</span>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <nav aria-label="Main Navigation">
+  <main>
+    <div class="wrap">
+      <section class="hero" style="border-top:none">
+        <h1>Frontend &amp; AI Engineer building fast web products and LLM agent systems</h1>
+        <p class="tagline">
+          I'm Prabhav Sharma. I build production React and Next.js applications, and the AI agent
+          systems behind them — for founders and engineering teams in India and worldwide.
+        </p>
+        <p class="loc">Jaipur, Rajasthan, India · Available remote worldwide</p>
+        <div class="cta">
+          <a class="btn btn--primary" href="mailto:prabhavsharma109@gmail.com">Hire me</a>
+          <a class="btn" href="/experience">Enter the 3D portfolio →</a>
+          <a class="btn" href="/Prabhav_Sharma_Resume.pdf">Résumé (PDF)</a>
+        </div>
+      </section>
+
+      <section id="services">
+        <h2>What I build</h2>
+        <p class="lede">
+          Most of my work falls into three buckets. If you're hiring a frontend developer, an AI
+          engineer, or someone who can do both without a handoff, this is the overlap.
+        </p>
+        <div class="grid">
+          <article class="card">
+            <h3>Frontend engineering</h3>
+            <p>
+              Production React and Next.js applications in TypeScript — component architecture that
+              stays maintainable, state that doesn't fight you, and performance treated as a feature
+              rather than a cleanup task.
+            </p>
+            <div class="tags"><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span></div>
+          </article>
+          <article class="card">
+            <h3>AI agents &amp; LLM systems</h3>
+            <p>
+              Multi-agent workflows on LangChain and LangGraph that do real work — decomposing goals
+              into tasks, calling tools, and reconciling results — not chatbot demos.
+            </p>
+            <div class="tags"><span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">Multi-agent</span><span class="tag">RAG</span></div>
+          </article>
+          <article class="card">
+            <h3>3D &amp; interactive web</h3>
+            <p>
+              Interactive WebGL experiences with Three.js and React Three Fiber — custom shaders,
+              scroll-driven cameras, and the performance budgeting that keeps them usable on real
+              devices.
+            </p>
+            <div class="tags"><span class="tag">Three.js</span><span class="tag">React Three Fiber</span><span class="tag">WebGL</span><span class="tag">GLSL</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="experience">
+        <h2>Experience</h2>
+        <p class="lede">Founder-level product ownership, team engineering, and high-volume delivery.</p>
+
+        <article class="role">
+          <div class="role__top">
+            <h3>Founder &amp; Product Engineer</h3>
+            <span class="role__when">Mar 2026 – Present</span>
+          </div>
+          <p class="role__org"><a href="https://projectrankup.com" rel="noopener">Project Rankup</a> · Jaipur, India</p>
+          <ul>
+            <li>Built an AI SEO automation platform end to end on Next.js, React, Node.js, PostgreSQL and LLM APIs.</li>
+            <li>Agent-based content pipelines producing blogs, metadata, FAQs and internal links — cutting manual content effort by over 80%.</li>
+            <li>Owned the full product architecture: authentication, analytics, billing and cloud infrastructure, now serving beta customers.</li>
+          </ul>
+        </article>
+
+        <article class="role">
+          <div class="role__top">
+            <h3>Software Engineer</h3>
+            <span class="role__when">Mar 2025 – May 2026</span>
+          </div>
+          <p class="role__org">Cadence Pro Inc. · Jaipur, India</p>
+          <ul>
+            <li>Rebuilt the flagship AI chatbot in React, TypeScript and Tailwind around a reusable component architecture.</li>
+            <li>Shipped Slack and GitHub integrations over OAuth, webhooks and REST, putting the product inside existing engineering workflows.</li>
+            <li>Built trie-backed real-time mention search that stayed instant as workspaces grew.</li>
+            <li>Delivered multi-agent project-planning workflows on LangGraph and LangChain.</li>
+          </ul>
+        </article>
+
+        <article class="role">
+          <div class="role__top">
+            <h3>Frontend / MERN Developer</h3>
+            <span class="role__when">Jun 2024 – Feb 2025</span>
+          </div>
+          <p class="role__org">HireQuotient · Bengaluru, India (Remote)</p>
+          <ul>
+            <li>Built and maintained 60+ AI-powered web applications on React, Next.js, Node.js, MongoDB and OpenAI APIs.</li>
+            <li>Worked on an AI resume builder and SEO content tooling during a period when organic traffic grew from 40K to 800K monthly visits.</li>
+            <li>Introduced Strapi CMS and a shared frontend architecture that cut feature development time by roughly 35%.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="projects">
+        <h2>Selected projects</h2>
+        <p class="lede">Things I've built and shipped, not concepts.</p>
+        <div class="grid">
+          <article class="card">
+            <h3><a href="https://projectrankup.com" rel="noopener">Project Rankup</a></h3>
+            <p>
+              AI SEO automation platform. Agent pipelines handle keyword research, content generation
+              and publishing as one flow. Founded and built solo.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Multi-agent planning workflows</h3>
+            <p>
+              LangGraph and LangChain agents that decompose a goal into tasks and reconcile them
+              against work already in flight, integrated into Slack and GitHub.
+            </p>
+          </article>
+          <article class="card">
+            <h3><a href="/experience">3D portfolio experience</a></h3>
+            <p>
+              An interactive hand-drawn 3D world built with React Three Fiber — infinite recycling
+              corridor, custom reveal shaders, scroll-driven camera and spatial audio.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills">
+        <h2>Technical skills</h2>
+        <dl class="skills">
+          <dt>Languages</dt>
+          <dd>JavaScript (ES6+), TypeScript, HTML5, CSS3</dd>
+          <dt>Frontend</dt>
+          <dd>React.js, Next.js, Redux, Zustand, React Query, Tailwind CSS, Material UI, SCSS</dd>
+          <dt>AI &amp; agents</dt>
+          <dd>LangChain, LangGraph, multi-agent systems, generative AI, retrieval-augmented generation, OpenAI APIs</dd>
+          <dt>Backend &amp; data</dt>
+          <dd>Node.js, REST APIs, GraphQL, MongoDB, PostgreSQL</dd>
+          <dt>3D &amp; graphics</dt>
+          <dd>Three.js, React Three Fiber, GLSL shaders, WebGL, GSAP</dd>
+          <dt>Tooling &amp; testing</dt>
+          <dd>Git, GitHub Actions, Vite, Webpack, Babel, Jest, React Testing Library</dd>
+        </dl>
+      </section>
+
+      <section id="experience-3d">
+        <div class="banner">
+          <h2>See the 3D portfolio</h2>
+          <p>
+            An interactive world you walk through — a hand-drawn corridor with rooms for my work,
+            projects and contact. Built with React Three Fiber and custom shaders.
+          </p>
+          <a class="btn btn--primary" href="/experience">Enter the 3D experience →</a>
+        </div>
+      </section>
+
+      <section id="faq">
+        <h2>Frequently asked questions</h2>
+        <p class="lede">The things people actually ask before getting in touch.</p>
+
+        <details>
+          <summary>Who is Prabhav Sharma?</summary>
+          <p>
+            Prabhav Sharma is a frontend and AI engineer based in Jaipur, Rajasthan, India. He builds
+            production web applications with React, Next.js and TypeScript, and LLM agent systems using
+            LangChain and LangGraph. He is the founder of Project Rankup, an AI SEO automation
+            platform, and previously worked at Cadence Pro and HireQuotient.
+          </p>
+        </details>
+
+        <details>
+          <summary>Are you available to hire as a freelance developer?</summary>
+          <p>
+            Yes — I'm available for freelance, contract and full-time frontend and AI engineering work.
+            I work remotely with clients worldwide and I'm based in Jaipur, India. The fastest way to
+            start is an email to <a href="mailto:prabhavsharma109@gmail.com">prabhavsharma109@gmail.com</a>
+            describing what you're building.
+          </p>
+        </details>
+
+        <details>
+          <summary>What technologies do you work with?</summary>
+          <p>
+            React.js, Next.js, TypeScript and JavaScript on the frontend, with Tailwind CSS, Redux,
+            Zustand and React Query. Node.js, REST and GraphQL on the backend. For AI work: LangChain,
+            LangGraph, multi-agent systems and generative AI APIs. I also build 3D and WebGL interfaces
+            with Three.js and React Three Fiber.
+          </p>
+        </details>
+
+        <details>
+          <summary>Do you work with international clients remotely?</summary>
+          <p>
+            Yes. I work remotely with companies and founders worldwide, including the US, Europe and
+            India, and I have prior remote experience delivering production applications for
+            distributed teams across time zones.
+          </p>
+        </details>
+
+        <details>
+          <summary>What is Project Rankup?</summary>
+          <p>
+            Project Rankup is an AI SEO automation platform I founded and built. It automates keyword
+            research, content generation and publishing using agent-based pipelines on Next.js, React,
+            Node.js, PostgreSQL and LLM APIs, cutting manual content production effort by over 80%.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can you build 3D or WebGL websites?</summary>
+          <p>
+            Yes. I build interactive 3D web experiences with Three.js and React Three Fiber. This site's
+            <a href="/experience">3D portfolio</a> is one — an infinite corridor with custom shaders,
+            scroll-driven camera work and spatial audio, budgeted to stay usable on real devices.
+          </p>
+        </details>
+      </section>
+
+      <section id="contact">
+        <h2>Get in touch</h2>
+        <p class="lede">
+          Hiring, freelance work, or something you want built — email is the fastest route and I read
+          everything.
+        </p>
+        <div class="cta">
+          <a class="btn btn--primary" href="mailto:prabhavsharma109@gmail.com">prabhavsharma109@gmail.com</a>
+          <a class="btn" href="https://www.linkedin.com/in/prabhav-sharma-8898362228" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://github.com/Prabhavsharma108" rel="noopener">GitHub</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <p>© 2026 Prabhav Sharma · Frontend &amp; AI Engineer, Jaipur, India</p>
       <ul>
-        <li><a href="/">Home — The Corridor</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/experience">Experience</a></li>
-        <li><a href="/projects">Projects</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li><a href="/experience">3D Portfolio</a></li>
+        <li><a href="https://github.com/Prabhavsharma108" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/prabhav-sharma-8898362228" rel="noopener">LinkedIn</a></li>
       </ul>
-    </nav>
-
-    <main>
-      <article>
-        <section>
-          <h2>About Prabhav Sharma</h2>
-          <p>
-            I am a frontend and AI engineer based in Rajasthan, India. I build production web applications with
-            React, Next.js and TypeScript, and increasingly the agent systems that sit behind them — LangChain and
-            LangGraph pipelines doing real work rather than demos.
-          </p>
-          <p>
-            I studied Mechanical &amp; Mechatronics Engineering at The LNM Institute of Information Technology
-            (2020–2024) and moved into software from there.
-          </p>
-        </section>
-
-        <section>
-          <h2>Experience</h2>
-
-          <h3>Founder &amp; Product Engineer — Project Rankup (March 2026 – Present)</h3>
-          <p>
-            Project Rankup is an AI SEO automation platform built with Next.js, React, Node.js, PostgreSQL and LLM
-            APIs, automating keyword research, content generation and publishing. I built agent-based content
-            pipelines that produce blogs, metadata, FAQs and internal links, cutting manual content production effort
-            by over 80%, and designed and deployed the full product architecture — authentication, analytics, billing
-            and cloud infrastructure — now serving several beta customers.
-          </p>
-
-          <h3>Software Engineer — Cadence Pro Inc. (March 2025 – May 2026)</h3>
-          <p>
-            Rebuilt the flagship AI chatbot in React, TypeScript and Tailwind CSS around a reusable component
-            architecture, cutting UI development effort substantially. Shipped Slack and GitHub integrations over
-            OAuth, webhooks and REST so the chatbot reached engineers inside their existing workflow. Built
-            real-time mention and autocomplete backed by a trie, and multi-agent project-planning workflows on
-            LangGraph and LangChain.
-          </p>
-
-          <h3>Frontend / MERN Developer Intern — HireQuotient (June 2024 – February 2025)</h3>
-          <p>
-            Built and maintained 60+ AI-powered web applications using React, Next.js, Node.js, MongoDB and OpenAI
-            APIs. Worked on high-traffic products including an AI resume builder and a set of SEO content tools,
-            over a period when organic traffic grew from 40K to 800K monthly visits. Integrated Strapi CMS and a
-            reusable frontend architecture that reduced feature development time by roughly 35%.
-          </p>
-        </section>
-
-        <section>
-          <h2>Technical Skills</h2>
-          <p>
-            <strong>Languages:</strong> JavaScript (ES6+), TypeScript, HTML5, CSS3.
-            <strong>Frameworks:</strong> React.js, Next.js, Redux, Zustand, React Query.
-            <strong>Styling:</strong> Tailwind CSS, Material UI, SCSS.
-            <strong>Tooling:</strong> Git, GitHub Actions, Webpack, Vite, Babel, npm, yarn.
-            <strong>Testing:</strong> Jest, React Testing Library.
-            <strong>APIs and data:</strong> REST, GraphQL.
-            <strong>AI:</strong> LangChain, LangGraph, generative AI, multi-agent systems.
-          </p>
-        </section>
-
-        <section>
-          <h2>Education</h2>
-          <p>
-            B.Tech, Mechanical &amp; Mechatronics Engineering — The LNM Institute of Information Technology, Jaipur
-            (September 2020 – May 2024).
-          </p>
-        </section>
-
-        <aside>
-          <h2>Contact</h2>
-          <p>
-            Email <a href="mailto:prabhavsharma109@gmail.com">prabhavsharma109@gmail.com</a>, or find me on
-            <a href="https://www.linkedin.com/in/prabhav-sharma-8898362228" target="_blank"
-              rel="noopener noreferrer">LinkedIn</a>
-            and <a href="https://github.com/Prabhavsharma108" target="_blank" rel="noopener noreferrer">GitHub
-              (@Prabhavsharma108)</a>.
-          </p>
-        </aside>
-      </article>
-    </main>
-  </div>
-
-  <noscript>
-    This portfolio is an interactive WebGL experience and needs JavaScript enabled. A full text version of
-    everything in it — experience, projects and contact details — is present on this page for screen readers and
-    search engines.
-  </noscript>
-
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+    </div>
+  </footer>
 </body>
 
 </html>
