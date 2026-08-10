@@ -44,12 +44,28 @@
     content="A hand-drawn 3D world you walk through. React, Next.js and LLM-agent work, including Project Rankup." />
   <meta name="twitter:image" content="%SITE_URL%/og-image.webp" />
 
-  <!-- Hand-drawn display faces used by the interface. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Gloria+Hallelujah&family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+  <!-- Fonts are self-hosted, so no third-party request sits on the critical
+       path. This previously pulled Caveat and Gloria Hallelujah from Google
+       which nothing here actually uses, while the hand-drawn faces the
+       interface does reference had no @font-face at all and silently fell
+       back to a generic cursive. Both fixed below.
+
+       The sketch TTFs are the same files troika loads for the 3D text, so
+       they come from cache rather than being fetched twice. -->
+  <style>
+    @font-face{font-family:'Inter';src:url('/fonts/Inter.woff2') format('woff2-variations');
+      font-weight:300 700;font-style:normal;font-display:swap}
+    @font-face{font-family:'Cabin Sketch';src:url('/fonts/CabinSketch-Regular.ttf') format('truetype');
+      font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Cabin Sketch';src:url('/fonts/CabinSketch-Bold.ttf') format('truetype');
+      font-weight:700;font-style:normal;font-display:swap}
+    @font-face{font-family:'Rubik Scribble';src:url('/fonts/RubikScribble-Regular.ttf') format('truetype');
+      font-weight:400;font-style:normal;font-display:swap}
+    /* Patrick Hand is referenced by a few overlay styles but was never
+       shipped; Cabin Sketch is the closest face we actually have. */
+    @font-face{font-family:'Patrick Hand';src:url('/fonts/CabinSketch-Regular.ttf') format('truetype');
+      font-weight:400;font-style:normal;font-display:swap}
+  </style>
 
   <!-- Structured Data -->
   <script type="application/ld+json">

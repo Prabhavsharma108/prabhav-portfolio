@@ -32,21 +32,36 @@
     content="Full stack and AI engineer in Jaipur, India. React, Next.js, TypeScript and LLM agent systems." />
   <meta name="twitter:image" content="%SITE_URL%/og-image.webp" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Caveat:wght@500&display=swap"
-    rel="stylesheet">
+  <!-- Fonts are self-hosted. Loading them from fonts.googleapis.com put a
+       three-hop chain on the critical path — HTML, then the CSS, then the
+       font files from a second origin — which cost ~2.2s of render blocking
+       on throttled mobile. Same-origin woff2 removes the extra DNS, TLS and
+       round trips entirely.
+
+       Only the two faces used above the fold are preloaded. Caveat and the
+       serif italic are decorative, so they load normally and swap in. -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/InstrumentSerif.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/Inter.woff2" crossorigin>
 
   <!-- Inlined so the page renders in one round trip. No JavaScript ships here
        at all, which is what keeps it fast enough to score well and cheap
        enough for crawlers and AI assistants to fetch reliably. -->
   <style>
+    /* swap on every face: text paints immediately in the fallback and
+       re-renders when the webfont arrives, so a slow font never blocks FCP. */
+    @font-face{font-family:'Instrument Serif';src:url('/fonts/InstrumentSerif.woff2') format('woff2');
+      font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Instrument Serif';src:url('/fonts/InstrumentSerifItalic.woff2') format('woff2');
+      font-weight:400;font-style:italic;font-display:swap}
+    @font-face{font-family:'Inter';src:url('/fonts/Inter.woff2') format('woff2-variations');
+      font-weight:400 600;font-style:normal;font-display:swap}
+    @font-face{font-family:'Caveat';src:url('/fonts/Caveat.woff2') format('woff2-variations');
+      font-weight:500;font-style:normal;font-display:swap}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
       --ink:#191817;
       --body:#4a4744;
-      --faint:#8c8781;
+      --faint:#726d66;
       --rule:#ddd8d0;
       --paper:#faf9f6;
       --accent:#b4472e;
@@ -196,7 +211,7 @@
         "@id":"%SITE_URL%/#webpage",
         "url":"%SITE_URL%/",
         "name":"Prabhav Sharma, Full Stack and AI Engineer",
-        "about":{"@id":"%SITE_URL%/#person"},
+        "mainEntity":{"@id":"%SITE_URL%/#person"},
         "inLanguage":"en"
       },
       {
