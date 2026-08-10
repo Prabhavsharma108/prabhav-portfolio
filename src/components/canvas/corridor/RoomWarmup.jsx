@@ -76,35 +76,21 @@ const RoomWarmup = ({ onWarmupComplete, isLowTier }) => {
     // Do not mount rooms at all on low end devices to prevent WebGL Context Lost
     if (isLowTier) return null;
 
-    // Dummy handlers to prevent errors (rooms expect these props)
-    const noop = () => {};
-
-    return (
-        <group position={[0, -500, 0]}>
-
-            {/* Mount all rooms in Suspense - positioned far below camera */}
-            <Suspense fallback={null}>
-                <group position={[-20, 0, 0]}>
-                    <GalleryRoom showRoom={true} onReady={noop} isExiting={false} isWarmup={true} />
-                </group>
-            </Suspense>
-            <Suspense fallback={null}>
-                <group position={[20, 0, 0]}>
-                    <StudioRoom showRoom={true} onReady={noop} isExiting={false} isWarmup={true} />
-                </group>
-            </Suspense>
-            <Suspense fallback={null}>
-                <group position={[-20, 0, -50]}>
-                    <AboutRoom showRoom={true} onReady={noop} isExiting={false} isWarmup={true} />
-                </group>
-            </Suspense>
-            <Suspense fallback={null}>
-                <group position={[20, 0, -50]}>
-                    <ContactRoom showRoom={true} onReady={noop} isExiting={false} isWarmup={true} />
-                </group>
-            </Suspense>
-        </group>
-    );
+    // Rooms are deliberately NOT mounted here any more.
+    //
+    // Mounting all four off-screen forced every room's textures to download
+    // before the loading screen could finish — ~10MB and 226 requests, which
+    // made the site effectively unmeasurable: Lighthouse's driver timed out
+    // and Googlebot abandoned the page before it rendered.
+    //
+    // Each room already sits behind its own Suspense boundary and loads when
+    // opened, so the cost of dropping this is a brief shader compile on first
+    // entry to a room, paid by people who actually go there. That is a much
+    // better trade than making every visitor wait for all four up front.
+    //
+    // The frame-count + gl.compileAsync above still runs, so the corridor
+    // itself is warmed before the preloader hands over.
+    return null;
 };
 
 export default RoomWarmup;

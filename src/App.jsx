@@ -62,21 +62,19 @@ const isLowEnd = isMobileDevice || isWeakCPU || isLowRAM || isSmallScreen;
 // Laptops with touch screens (which also have a mouse/trackpad) will return true here.
 const supportsHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
 
-// Trigger Three.js preloads at module level (as standard for Drei)
-if (isLowEnd) {
-  const CORE_TEXTURES = [...ENTRANCE_TEXTURES, ...CORRIDOR_TEXTURES, ...UI_TEXTURES, ...IMAGE_ASSETS];
-  const filteredCore = filterTexturesByDevice(CORE_TEXTURES, supportsHover);
-  const filteredAbout = filterTexturesByDevice(ABOUT_TEXTURES, supportsHover);
+// Only the entrance and corridor are needed before the visitor can interact.
+// Room textures load when a room is actually opened — every room already sits
+// behind its own Suspense boundary.
+//
+// Preloading PRELOAD_ALL here (the previous behaviour) pulled 226 images and
+// ~10MB before first paint. That is slower than it sounds: Lighthouse's driver
+// times out and reports "Target closed" rather than a score, and Googlebot
+// gives up long before the scene is ready, so the page cannot be indexed
+// properly. Deferring room assets is what makes the site measurable at all.
+const FIRST_PAINT_TEXTURES = [...ENTRANCE_TEXTURES, ...CORRIDOR_TEXTURES, ...UI_TEXTURES];
 
-  filteredCore.forEach(path => useTexture.preload(path));
-  filteredAbout.forEach(path => useLoader.preload(TextureLoader, path));
-} else {
-  const filteredAll = filterTexturesByDevice(PRELOAD_ALL, supportsHover);
-  const filteredLoader = filterTexturesByDevice(PRELOAD_LOADER, supportsHover);
-  
-  filteredAll.forEach(path => useTexture.preload(path));
-  filteredLoader.forEach(path => useLoader.preload(TextureLoader, path));
-}
+filterTexturesByDevice(FIRST_PAINT_TEXTURES, supportsHover)
+  .forEach(path => useTexture.preload(path));
 
 const FONT_URL = 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff';
 
