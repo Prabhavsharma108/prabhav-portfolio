@@ -66,12 +66,13 @@ const HeroText = ({ position = [0, 0.3, 0] }) => {
     ], []);
     // Tagline words for split effect
     const taglineWords = useMemo(() => [
-        { text: '<',           baseX: -1.75, splitDir: -2.0, delay: 0 },
-        { text: 'Frontend',    baseX: -1.15, splitDir: -1.3, delay: 0 },
-        { text: '&',           baseX: -0.55, splitDir: -0.7, delay: 0 },
-        { text: 'AI',          baseX: -0.20, splitDir: -0.3, delay: 0 },
-        { text: 'Engineer',    baseX: 0.45,  splitDir: 0.6, delay: 0 },
-        { text: '/>',          baseX: 1.10,  splitDir: 2.0, delay: 0 },
+        { text: '<',           baseX: -1.85, splitDir: -2.0, delay: 0 },
+        { text: 'Full',        baseX: -1.42, splitDir: -1.5, delay: 0 },
+        { text: 'Stack',       baseX: -0.86, splitDir: -1.1, delay: 0 },
+        { text: '&',           baseX: -0.38, splitDir: -0.6, delay: 0 },
+        { text: 'AI',          baseX: -0.03, splitDir: -0.2, delay: 0 },
+        { text: 'Engineer',    baseX: 0.62,  splitDir: 0.9, delay: 0 },
+        { text: '/>',          baseX: 1.28,  splitDir: 2.0, delay: 0 },
     ], []);
 
     // Animation loop

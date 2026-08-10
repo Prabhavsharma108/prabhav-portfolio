@@ -20,7 +20,7 @@ const ScreenReaderOverlay = () => {
 
             {/* Main accessible navigation */}
             <nav id="sr-main-nav" className="sr-only" aria-label="Portfolio rooms">
-                <h1>Prabhav Sharma — Frontend & AI Engineer Portfolio</h1>
+                <h1>Prabhav Sharma — Full Stack & AI Engineer Portfolio</h1>
                 <h2>Portfolio Navigation</h2>
 
                 {!hasEntered && (
